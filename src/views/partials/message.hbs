@@ -1,0 +1,33 @@
+       {{#if message }}
+       <br>
+       <div class="container">
+           <div class="row">
+               <div class="col-md-6 mx-auto">
+                   <div id="alert_danger" class="alert alert-danger alert-dismissible fade show rounded-0" role="alert">
+                       <div class="text-center">{{message}}</div>
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                       </button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       {{/if}}
+
+       {{#if user_success }}
+       <br>
+       <div class="container">
+           <div class="row">
+               <div class="col-md-6 mx-auto">
+                   <div id="alert_success" class="alert alert-success alert-dismissible fade show rounded-0"
+                       role="alert">
+                       <div class="text-center">{{user_success}}</div>
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                       </button>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       {{> JS_app}}
+
+       {{/if}}

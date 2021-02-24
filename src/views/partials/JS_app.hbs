@@ -1,0 +1,129 @@
+<script>
+    // Once DOM is ready it will execute the code...
+    $(document).ready(function () {
+
+        // Validate usuarios form
+        $("form[name='form_usuario']").validate({
+            rules: {
+                nombre_persona: "required",
+                nombre_usuario: "required",
+                rol: "required",
+                password: "required",
+                confirm_pwd: {
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                nombre_persona: "Por favor ingresa tu nombre",
+                nombre_usuario: "Por favor ingresa tu nombre de usuario",
+                rol: "Por favor selecciona un rol",
+                password: "Ingresa una contraseña",
+                confirm_pwd: "Ingresa nuevamente tu contraseña"
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+
+        // Validate sedes form
+        $("form[name='form_sede']").validate({
+                rules: {
+                    nombre_sede: "required"
+                },
+                messages: {
+                    nombre_sede: "Por favor ingresa el nombre de una sede"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate areas form
+        $("form[name='form_area']").validate({
+                rules: {
+                    nombre_area: "required"
+                },
+                messages: {
+                    nombre_area: "Por favor ingresa el nombre de una área"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate log in form
+        $("form[name='form_login']").validate({
+                rules: {
+                    nombre_usuario: "required",
+                    password: "required"
+                },
+                messages: {
+                    nombre_usuario: "Por favor ingresa tu nombre de usuario",
+                    password: "Ingresa tu contraseña de usuario"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Show or hide password field/s
+        $("#toggle").change(function () {
+            if ($(this).is(':checked')) {
+                $("#password").attr("type", "text");
+                $("#confirm_pwd").attr("type", "text");
+            } else {
+                $("#password").attr("type", "password");
+                $("#confirm_pwd").attr("type", "password");
+            }
+        });
+    });
+
+    // Verify if 2 passwords match in the same form
+    $('#password, #confirm_pwd').on('keyup', function () {
+        if ($('#password').val() == $('#confirm_pwd').val()) {
+            $('#message').html('Las contraseñas coinciden').css('color', 'green');
+        } else
+            $('#message').html('Las contraseñas no coinciden').css('color', 'red');
+    });
+
+    // Make text lowercase and without blank spaces in 'nombre_usuario' input
+    $('#nombre_usuario').keyup(function () {
+        $(this).val($(this).val().toLowerCase());
+    });
+    $('#nombre_usuario').bind('input', function () {
+        $(this).val(function (_, v) {
+            return v.replace(/\s+/g, '');
+        });
+    });
+
+    // Add timeout to the alert messages
+    $('#alert_success').fadeTo(2000, 500).slideUp(500, function(){
+        $("#alert_success").slideUp(500);
+    });
+    $('#alert_danger').fadeTo(2000, 500).slideUp(500, function(){
+        $("#alert_danger").slideUp(500);
+    });
+
+    // Add styles when the side menu opens
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    // Add styles when the side menu closes
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    // Change DataTables JQuery language:
+        $('#table_matriz').DataTable({
+            "language":{
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }
+        });
+</script>

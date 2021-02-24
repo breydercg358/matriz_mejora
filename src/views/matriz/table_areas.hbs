@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item"><a href="/table_sedes">Tabla sedes</a></li>
+            <li class="breadcrumb-item">Tabla áreas {{sedes.nombre_sede}}</li>
+        </ol>
+    </nav>
+</div>
+
+<h4 class="text-center">Listado de áreas de la sede {{sedes.nombre_sede}}</h4>
+<br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="table-responsive col-md-8">
+            <div class="d-flex justify-content-start mr-4">
+                <button type="button" class=" btn btn-success rounded-0" data-bs-toggle="modal"
+                    data-bs-target="#ModalAgregarArea">
+                    <i class="fas fa-plus-circle fa-fw"></i>Agregar área
+                </button>
+            </div>
+            <table class="table table-hover table-striped align-middle text-center dt-responsive nowrap row-border" id="table_matriz">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" title="Identificador" data-toggle="tooltip">ID</th>
+                        <th scope="col">Nombre del área</th>
+                        <th scope="col">Creada</th>
+                        <th scope="col">Actualizada</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each areas}}                     
+                    <tr>
+                        <td>{{id_area}}</td>
+                        <td>{{nombre_area}}</td>
+                        <td title="{{created_at}}" data-toggle="tooltip">{{timeago created_at}}</td>
+                        <td title="{{updated_at}}" data-toggle="tooltip">{{timeago updated_at}}</td>
+                        <td>
+                            <a class="btn btn-warning rounded-0 btn_tables_editar text-light"
+                                href="/edit_area/{{id_area}}/areas?id_sede={{id_sede}}" title="Editar"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-danger rounded-0 btn_tables_eliminar text-light"
+                                href="/delete_area/{{id_area}}/areas?id_sede={{id_sede}}" title="Eliminar"><i
+                                    class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td colspan="6">No hay datos para mostrar en esta tabla</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{> modals}}
