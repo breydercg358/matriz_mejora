@@ -1,6 +1,6 @@
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgb(55, 55, 71) rgb(0, 0, 0);
+    scrollbar-color: rgba(206, 206, 206, 0.637) rgb(33, 38, 44);
   }
   
   /* Works on Chrome, Edge, and Safari */
@@ -9,13 +9,12 @@
   }
   
   *::-webkit-scrollbar-track {
-    background: rgb(0, 0, 0);
+    background: rgb(33, 38, 44);
   }
   
   *::-webkit-scrollbar-thumb {
-    background-color: rgb(55, 55, 71);
+    background-color: rgba(206, 206, 206, 0.637);
     border-radius: 20px;
-    border: 3px solid rgb(0, 0, 0);
   }
 
 hr {
@@ -40,7 +39,7 @@ a .menu_open:hover {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 4;
     top: 0;
     left: 0;
     background-color: rgb(33, 38, 44);
@@ -74,11 +73,15 @@ a .menu_open:hover {
     margin-right: 0.4em;
 }
 
-.sidenav .closebtn {
-    position: absolute;
-    margin-top: -1.9em;
-    right: 10px;
+.sidenav .closebtn{
+    text-align: right;
+    margin-top: -0.5em;
+    left: 10px;
     font-size: 36px;
+}
+
+.sidenav .span_closebtn{
+    width: 50%;
 }
 
 .sidenav .closebtn:hover {
@@ -95,6 +98,11 @@ a .menu_open:hover {
 #main {
     transition: margin-left .5s;
     padding: 16px;
+}
+
+nav .breadcrumb{
+    margin-top: 3.5em;
+    background-color: rgba(0, 0, 0, 0.048);
 }
 
 @media screen and (max-height: 450px) {
@@ -131,24 +139,54 @@ td .btn_tables_editar i,
 td .btn_tables_eliminar i {
     width: 21px;
     text-align: center;
+    transition: 0.5s;
 }
 
-td .btn_tables_editar:hover {
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.418);
+td .btn_tables_editar,
+td .btn_tables_eliminar{
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.330);
+    border: 1px solid;
+    transition: 0.2s;
 }
 
-td .btn_tables_eliminar:hover {
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.418);
+td .btn_tables_editar{
+    border: 1px solid rgba(0, 82, 175);
+    color: rgb(0, 82, 175);
 }
 
-.btn_agregar{
-    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.637);
+td .btn_tables_estado{
+    border-radius: 0;
+    font-size: 13px;
+    color: #000;
     transition: 0.3s;
 }
 
+td .btn_tables_estado:hover{
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+td .btn_tables_editar:hover,
+td .btn_tables_eliminar:hover {
+    border-radius: 0;
+    box-shadow: -2px -2px 7px rgba(0, 0, 0, 0.500);
+    transition: 0.2s;
+}
+
+#table_matriz{
+    box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.185);
+}
+
+.btn_agregar{
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.437);
+    transition: 0.2s;
+}
+
 .btn_agregar:hover{
-    box-shadow: -2px -2px 1px rgba(0, 0, 0, 0.637);
+    box-shadow: -3px -3px 2px rgba(0, 0, 0, 0.437);
     background-color: #198754;
+    transition: 0.2s;
 }
 
 label,
@@ -162,27 +200,71 @@ div .btns {
 }
 
 .input-group input,
-.form-group select,
-.input-group span {
+.input-group select,
+.borderless_hallazgos {
     border-radius: 0;
     border-top: 0px;
     border-right: 0px;
     border-left: 0px;
 }
 
+.input-group textarea{
+    border-left: 0px;
+}
+
+.border_hallazgos{
+    border-radius: 0;
+    border: 1px solid rgba(128, 128, 128, 0.432);
+    border-right: 0px;
+}
+
+.form_hallazgos label, .form_hallazgos_cambio label{
+    margin-top: 2.5em;
+}
+
+.form_hallazgos .label_responsable{
+    margin-top: 0em;
+}
+
+div .check_responsable{
+    margin-left: 1em;
+    margin-top: 0em;
+}
+
 .card {
-    box-shadow: -2px -2px 25px rgba(0, 0, 0, 0.164);
+    box-shadow: -2px -2px 25px rgba(0, 0, 0, 0.205);
+}
+
+.card_login{
+    box-shadow: 0px 0px 0px;
+    border: 0px;
 }
 
 .card_dashboard{
-    background-color: rgba(0, 0, 0, 0.075);
-    border: 4px solid rgba(97, 97, 97, 0.24);
+    background-color: rgba(138, 138, 138, 0.205);
+    border: 4px solid rgba(97, 97, 97, 0.11);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.301), -2px -2px 5px rgba(0, 0, 0, 0.301);
 }
 
-.container_login {
+.card_hallazgos{
+    background-color: rgba(255, 255, 255, 0.055);
+}
+
+#table_matriz{
+    border-bottom: 1px solid rgba(128, 128, 128, 0.349);
+}
+
+.container_login{
+    border-radius: 10px;
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.120), 2px -2px 5px rgba(128, 128, 128, 0.120);
+}
+
+.container_dashboard{
+    margin-top: -4em;
+}
+
+.container_form{
     box-shadow: -2px -2px 25px rgba(0, 0, 0, 0.164);
-    height: 22em;
-    margin-top: 8em;
 }
 
 .input-group input:focus {
@@ -192,8 +274,46 @@ div .btns {
     box-shadow: none !important;
 }
 
+.body_foto{
+    background-color: rgba(255, 255, 255);
+}
+
+.card_fotos{
+    background-color: rgba(0, 0, 0, 0.178);
+    box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.199);
+    margin-top: 1.2em;
+}
+
+.foto_hallazgo{
+    height: 400px;
+    box-shadow: 2px 2px 5px rgba(64, 83, 117, 0.322);
+}
+
 form .error{
     color: rgb(211, 0, 0);
     width: 100%;
-    margin-top: 0.3em;
+    margin-top: 0;
+}
+
+.ctnr_message{
+    margin-top: 3em;
+}
+
+.title_login{
+    background-color: rgb(33, 38, 44);
+    margin-top: 1.5em;
+    border-radius: 10px;
+}
+
+.border_answer{
+    border: 2px solid red;
+}
+
+.a_dates{
+    color: #000;
+}
+
+.a_dates:hover{
+    color: #000;
+    text-decoration: none;
 }

@@ -1,20 +1,20 @@
-{{#if user}}
+{{#if (isAdministrator user.rol "Administrador")}}
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-dark bg-dark">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar_matriz">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"> <span class="menu_open" style="font-size:20px;cursor:pointer"
           onclick="openNav()">&#9776; Menú</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span><i class="fas fa-plus"></i></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <span class="mx-auto text-light">Número actual de planes totales:</span>
+        <span class="mx-auto text-light"><b>MATRIZ DE MEJORA</b></span></span>
         <div class="dropdown">
           <button class="btn btn-dark dropdown-toggle rounded-0" type="button" id="dropdownMenuButton1"
-            data-bs-toggle="dropdown" aria-expanded="false">
+            data-toggle="dropdown" aria-expanded="false">
             <span class="text-light">
               <i class="fas fa-user-circle"></i>
               {{user.nombre_usuario}}
@@ -31,14 +31,16 @@
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <br>
-    <h4 class="text-center text-light h4_title">MATRIZ DE MEJORA</h4>
-    <hr>
-    <a href="/dashboard">
-      <i class="fas fa-columns"></i>
-      Dashboard</a>
+    <h4 class="text-center text-light h4_title">TABLAS</h4>
+    <a href="/table_usuarios">
+      <i class="fas fa-user fa-fw"></i>
+      Usuarios</a>
     <a href="/table_hallazgos">
       <i class="fas fa-search"></i>
       Hallazgos</a>
+    <a href="/table_responsables">
+      <i class="fas fa-users"></i>
+      Responsables</a>
     <a href="/table_sedes">
       <i class="fas fa-building"></i>
       Sedes</a>
@@ -57,16 +59,73 @@
     <a href="/table_estados">
       <i class="fas fa-signal"></i>
       Estados</a>
-    <a href="/table_responsables">
-      <i class="fas fa-users"></i>
-      Responsables</a>
-    <a href="/table_usuarios">
-      <i class="fas fa-user fa-fw"></i>
-      Usuarios</a>
+    <a href="/table_cambio_estado">
+      <i class="fas fa-history"></i>
+      Historial de cambios de estado
+    </a>
+    <hr>
+    <br>
+    <h4 class="text-center text-light h4_title">GRÁFICAS</h4>
+    <a href="/dashboard">
+      <i class="fas fa-columns"></i>
+      Dashboard</a>
   </div>
 
   </div>
 
   {{> JS_app}}
 
+  {{/if}}
+
+  {{#if (isBasicUser user.rol "Estándar")}}
+
+<body>
+
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar_matriz">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"> <span class="menu_open" style="font-size:20px;cursor:pointer"
+          onclick="openNav()">&#9776; Menú</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-plus"></i></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <span class="mx-auto text-light"><b>MATRIZ DE MEJORA</b></span></span>
+        <div class="dropdown">
+          <button class="btn btn-dark dropdown-toggle rounded-0" type="button" id="dropdownMenuButton1"
+            data-toggle="dropdown" aria-expanded="false">
+            <span class="text-light">
+              <i class="fas fa-user-circle"></i>
+              {{user.nombre_usuario}}
+            </span>
+          </button>
+          <ul class="dropdown-menu rounded-0 text-center" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="/logout">Cerrar sesión<i class="fas fa-sign-out-alt fa-fw"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <br>
+    <h4 class="text-center text-light h4_title">TABLAS</h4>
+    <a href="/table_hallazgos/{{user.id_usuario}}">
+      <i class="fas fa-search"></i>
+      Mis hallazgos
+    </a>
+    <a href="/table_cambio_estado">
+      <i class="fas fa-history"></i>
+      Historial de cambios de estado
+    </a>
+    <hr>
+    <br>
+    <h4 class="text-center text-light h4_title">GRÁFICAS</h4>
+    <a href="/dashboard">
+      <i class="fas fa-columns"></i>
+      Dashboard</a>
+  </div>
+
+  </div>
   {{/if}}

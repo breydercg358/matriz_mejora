@@ -7,7 +7,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-
+const { getAreas } = require('./routes/dynamic_queries');
 const { database } = require('./keys');
 
 // Inicializaciones
@@ -54,8 +54,10 @@ app.use((req, res, next) => {
 app.use(require('./routes'));
 app.use('/', require('./routes/links'));
 app.use('/', require('./routes/authentication'));
+app.use('/form_hallazgos/sede', getAreas);
 
 // Public
+app.use(express.static(('img_hallazgos')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Starting

@@ -10,21 +10,17 @@
 </div>
 
 <br>
+<h3 class="modal-title col-md-6 mx-auto text-center bg-dark text-light" id="exampleModalLabel">Editar área</h3>
 <div class="card col-md-6 mx-auto">
-    <h3 class="modal-title text-center bg-dark text-light" id="exampleModalLabel">Editar área</h3>
     <div class="card-body rounded-0">
         <form action="/edit_area/{{AreasEdit.id_area}}/areas?id_sede={{id_sede}}" method="POST" name="form_area">
-            <label for="ID" title="Identificador">ID</label>
             <div class="input-group">
-                <span class="input-group-text id_input">
-                    <i class="fas fa-hashtag"></i>
-                </span>
-                <input type="text" class="form-control" name="id_area" id="id_area"
+                <input type="hidden" class="form-control" name="id_area" id="id_area"
                     value="{{AreasEdit.id_area}}" readonly="readonly">
             </div>
             <label for="nombre_persona">Nombre del área</label>
             <div class="input-group">
-                <span class="input-group-text bg-transparent">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
                     <i class="fas fa-map-marker-alt"></i>
                 </span>
                 <input type="text" class="form-control" name="nombre_area" id="nombre_area"
@@ -32,7 +28,31 @@
             </div>
             <br>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="submit" class="btn btn-outline-success rounded-0">Editar</button>
+                <button type="button" class="btn btn-outline-success rounded-0" data-toggle="modal" data-target="#ModalEditarArea{{@index}}">Editar</button>
+                {{!-- MODAL EDITAR ÁREA --}}
+                <div class="modal fade" id="ModalEditarArea{{@index}}" tabindex="-1"
+                    aria-labelledby="EliminarUsuarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-body rounded-0">
+                                <span class="text-primary d-flex justify-content-center">
+                                    <i class="fas fa-info-circle fa-3x"></i>
+                                </span>
+                                <br>
+                                <h5 class="text-center">¿Desea editar el área<br>
+                                    '{{AreasEdit.nombre_area}}'?</h5>
+                                <br>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success rounded-0">Sí
+                                        (editar)</button>
+                                    <button type="button" class="btn btn-outline-danger rounded-0"
+                                        data-dismiss="modal">No (cerrar ventana)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- FIN MODAL EDITAR ÁREA --}}
                 <a type="button" class="btn btn-outline-danger rounded-0" href="/table_areas/areas?id_sede={{id_sede}}">Cancelar</a>
             </div>
         </form>

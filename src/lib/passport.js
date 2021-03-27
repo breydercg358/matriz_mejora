@@ -15,12 +15,14 @@ passport.use('local.login', new LocalStrategy({
         const validPassword = await helpers.matchPassword(password, user.password);
         if (validPassword){
             await pool.query('UPDATE tbl_usuarios SET ultimo_login = NOW() WHERE nombre_usuario = ?', [username]);
+            console.log(user.rol);
+            console.log(user.id_usuario);
             done(null, user);
         } else {
-            done(null, false, req.flash('message', 'Contraseña inválida'));
+            done(null, false, req.flash('message', 'La contraseña ingresada no es válida. Por favor inténtalo de nuevo.'));
         }
     }else {
-        return done(null, false, req.flash('message', 'El nombre de usuario no existe'));
+        return done(null, false, req.flash('message', 'El nombre de usuario "' + [username] + '" no existe dentro de la aplicación.'));
     }
 }));
 
@@ -39,10 +41,20 @@ passport.use('local.table_usuarios', new LocalStrategy({
         updated_at,
         password
     };
-    newUser.password = await helpers.encryptPassword(password);
-    const result = await pool.query('INSERT INTO tbl_usuarios SET ?', [newUser]);
-    newUser.id = result.insertId;
-    return done(null, newUser, req.flash('user_success', '¡Usuario agregado con éxito!'));
+    const equal_usuario = {
+        usuario: await pool.query("SELECT nombre_usuario FROM tbl_usuarios WHERE nombre_usuario = ?", [nombre_usuario])
+    };
+    if(Object.values(equal_usuario.usuario).length <= 0){
+        newUser.password = await helpers.encryptPassword(password);
+        const result = await pool.query('INSERT INTO tbl_usuarios SET ?', [newUser]);
+        newUser.id = result.insertId;
+        return done(null, newUser, req.flash('user_success', '¡Usuario agregado con éxito!'));
+    }else{
+        if(newUser.nombre_usuario == Object.values(equal_usuario.usuario[0])){
+            return done(null, false, req.flash('message', "El nombre de usuario '" + Object.values(equal_usuario.usuario[0]) + "' ya existe dentro de la aplicación."));
+        }
+    }
+
 }));
 
 passport.serializeUser(function(user, done){

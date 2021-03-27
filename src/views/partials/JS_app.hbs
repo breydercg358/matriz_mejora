@@ -2,11 +2,18 @@
     // Once DOM is ready it will execute the code...
     $(document).ready(function () {
 
+        jQuery.validator.addMethod("notEqual", function(value, element, param){
+            return this.optional(element) || value != $(param).val();
+        }, "El nombre de la persona y el nombre de usuario no pueden ser iguales.");
+
         // Validate usuarios form
         $("form[name='form_usuario']").validate({
             rules: {
                 nombre_persona: "required",
-                nombre_usuario: "required",
+                nombre_usuario: {
+                    required: true,
+                    notEqual: "#nombre_persona"
+                },
                 rol: "required",
                 password: "required",
                 confirm_pwd: {
@@ -15,8 +22,11 @@
             },
             messages: {
                 nombre_persona: "Por favor ingresa tu nombre",
-                nombre_usuario: "Por favor ingresa tu nombre de usuario",
-                rol: "Por favor selecciona un rol",
+                nombre_usuario: {
+                    required: "Por favor ingresa tu nombre de usuario",
+                    notEqual: "El nombre de la persona y el nombre del usuario no pueden ser iguales."
+                },
+                rol: "",
                 password: "Ingresa una contraseña",
                 confirm_pwd: "Ingresa nuevamente tu contraseña"
             },
@@ -66,6 +76,188 @@
                 }
             });
 
+        // Validate tipos de hallazgo form
+        $("form[name='form_tipo']").validate({
+                rules: {
+                    nombre_tipo: "required"
+                },
+                messages: {
+                    nombre_tipo: "Por favor ingresa el nombre de un tipo de hallazgo"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate responsables form
+        $("form[name='form_responsable']").validate({
+                rules: {
+                    nombre_responsable: "required"
+                },
+                messages: {
+                    nombre_responsable: "Por favor ingresa el nombre del responsable"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate tipos de hallazgo form
+        $("form[name='form_fuente']").validate({
+                rules: {
+                    nombre_fuente: "required"
+                },
+                messages: {
+                    nombre_fuente: "Por favor ingresa el nombre de una fuente"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate tipos de hallazgo form
+        $("form[name='form_factor']").validate({
+                rules: {
+                    nombre_factor: "required"
+                },
+                messages: {
+                    nombre_factor: "Por favor ingresa el nombre de un factor de riesgo"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate tipos de hallazgo form
+        $("form[name='form_prioridad']").validate({
+                rules: {
+                    nombre_prioridad: "required"
+                },
+                messages: {
+                    nombre_prioridad: "Por favor ingresa el nombre de una prioridad"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate tipos de hallazgo form
+        $("form[name='form_estado']").validate({
+                rules: {
+                    nombre_estado: "required",
+                    color_estado: "required"
+                },
+                messages: {
+                    nombre_estado: "Por favor ingresa el nombre de un estado",
+                    color_estado: "Por favor selecciona un color"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+
+        // Validate hallazgos form
+        $("form[name='form_hallazgos']").validate({
+            rules: {
+                nombre_hallazgo: "required",
+                sede: "required",
+                area: "required",
+                lugar_hallazgo: "required",
+                responsable: {
+                    required: true,
+                    minlength: 1
+                },
+                descripcion: "required",
+                tipo_hallazgo: "required",
+                fuente: "required",
+                factor_riesgo: "required",
+                prioridad: "required",
+                estado: "required",
+                plan_sugerido: "required",
+                fecha: "required",
+                fecha_ejecucion: "required",
+                registro_fotografico: {
+                    required: true,
+                    accept: "image/*"
+                }
+            },
+            messages: {
+                nombre_hallazgo: "Ingresa el nombre del hallazgo",
+                sede: "",
+                area: "",
+                lugar_hallazgo: "Añade el lugar exacto del hallazgo",
+                responsable: {
+                    required: "Escoge por lo menos a 1 responsable",
+                    minlength: "Escoge por lo menos a 1 responsable"
+                },
+                descripcion: "Añada una descripción",
+                tipo_hallazgo: "",
+                fuente: "",
+                factor_riesgo: "",
+                prioridad: "",
+                estado: "",
+                plan_sugerido: "Añada un plan de acción",
+                fecha: "Por favor escoja una fecha",
+                fecha_ejecucion: "Por favor escoja una fecha de ejecución",
+                registro_fotografico: {
+                    required: "Escoge por lo menos 1 imagen",
+                    accept: "Escoge solo archivos que sean imágenes"
+                }
+            },
+            submitHandler: function (form){
+                form.submit();
+            }
+        });
+
+        // Validate hallazgos form edit
+        $("form[name='form_hallazgos_edit']").validate({
+            rules: {
+                sede: "required",
+                area: "required",
+                lugar_hallazgo: "required",
+                responsable: {
+                    required: true,
+                    minlength: 1
+                },
+                descripcion: "required",
+                tipo_hallazgo: "required",
+                fuente: "required",
+                factor_riesgo: "required",
+                prioridad: "required",
+                estado: "required",
+                plan_sugerido: "required",
+                fecha: "required",
+                fecha_ejecucion: "required",
+                registro_fotografico: {
+                    accept: "image/*"
+                }
+            },
+            messages: {
+                sede: "",
+                area: "",
+                lugar_hallazgo: "Añade el lugar exacto del hallazgo",
+                responsable: {
+                    required: "Escoge por lo menos a 1 responsable",
+                    minlength: "Escoge por lo menos a 1 responsable"
+                },
+                descripcion: "Añada una descripción",
+                tipo_hallazgo: "",
+                fuente: "",
+                factor_riesgo: "",
+                prioridad: "",
+                estado: "",
+                plan_sugerido: "Añada un plan de acción",
+                fecha: "Por favor escoja una fecha",
+                fecha_ejecucion: "Por favor escoja una fecha de ejecución",
+                registro_fotografico: {
+                    accept: "Escoge solo archivos que sean imágenes"
+                }
+            },
+            submitHandler: function (form){
+                form.submit();
+            }
+        });
+
         // Show or hide password field/s
         $("#toggle").change(function () {
             if ($(this).is(':checked')) {
@@ -76,6 +268,8 @@
                 $("#confirm_pwd").attr("type", "password");
             }
         });
+
+        bsCustomFileInput.init();
     });
 
     // Verify if 2 passwords match in the same form
@@ -97,10 +291,10 @@
     });
 
     // Add timeout to the alert messages
-    $('#alert_success').fadeTo(2000, 500).slideUp(500, function(){
+    $('#alert_success').fadeTo(3500, 500).slideUp(500, function(){
         $("#alert_success").slideUp(500);
     });
-    $('#alert_danger').fadeTo(2000, 500).slideUp(500, function(){
+    $('#alert_danger').fadeTo(3500, 500).slideUp(500, function(){
         $("#alert_danger").slideUp(500);
     });
 
@@ -117,13 +311,99 @@
     }
 
     $(function () {
+        // Activate all tooltips
         $('[data-toggle="tooltip"]').tooltip();
+        // Pick date
+        $('.calendario').flatpickr({
+            time_24hr: true,
+            altInput: true,
+            altFormat: "l - F j, Y",
+            dateFormat: "Y-m-d H:i",
+            defaultDate: new Date(),
+            wrap: true,
+            locale: "es"
+        });
+        $('.calendario_edit').flatpickr({
+            enableTime: true,
+            time_24hr: true,
+            altInput: true,
+            altFormat: "l - F j, Y",
+            dateFormat: "Y-m-d",
+            wrap: true,
+            locale: "es"
+        });
+        $('.calendario_cambio').flatpickr({
+            altInput: true,
+            altFormat: "l - F j, Y",
+            dateFormat: "Y-m-d",
+            wrap: true,
+            locale: "es"
+        });
     });
 
+    // DYNAMIC QUERY sedes-areas
+    $(document).ready(function(){
+
+    $('input#new_registro_fotografico').change(function(){
+       var files = $(this)[0].files;
+       var ImgTotal = document.getElementById('ImgValue').value;
+       var IntImgTotal = parseInt(ImgTotal);
+       var TotalSumImg = IntImgTotal + files.length;
+       if(TotalSumImg > 10){
+            $('#TextNoNewImg').append("<br><p class='text-danger text-center'><i class='fas fa-times-circle fa-fw'></i>El hallazgo no puede quedar con <strong>" + TotalSumImg + "</strong> registros fotográficos.</p>");
+            $('#btn_no_agregar').append("<button type='submit' class='btn btn-outline-success rounded-0' title='No es posible enviar las imagenes elegidas' data-toggle='tooltip' disabled>Subir registro/s</button>");
+            $('#btn_agregar').empty();
+            $('#TextNewImg').empty();
+       }else if(TotalSumImg <= 10 && files.length >= 1){
+            $('#btn_agregar').append("<button type='submit' class='btn btn-outline-success rounded-0'>Subir registro/s</button>");
+            $('#TextNewImg').append("<br><p class='text-success text-center'><i class='fas fa-check-circle fa-fw'></i>Listo para subir <br> <strong>Número final de imagenes en el hallazgo:</strong> " + TotalSumImg + "</p>");
+            $('#btn_no_agregar').empty();
+            $('#TextNoNewImg').empty();
+       }
+    });
+
+    $('#sede').change(function(){
+        var item = $('#sede').val();
+
+        $.ajax({
+            type:'GET',
+            data: { id_sede: item },
+            url:'/form_hallazgos/sede',
+            success: function(data){
+                console.log(data);
+                $('#area').empty();
+                $('area').append("<option disabled selected>Seleccione un área</option>");
+                $.each(data, function(index, areaObj){
+                    $('#area').append("<option value='" + areaObj.nombre_area + "' > " + areaObj.nombre_area + " </option> ");
+                });
+            }
+        });
+    });
+    });
+    
     // Change DataTables JQuery language:
-        $('#table_matriz').DataTable({
+    $(document).ready(function() {
+        $('#table_matriz').DataTable( {
+            "autoWidth": false,
+            responsive: {
+                details: {
+                    display: $.fn.dataTable.Responsive.display.modal( {
+                        header: function ( row ) {
+                            var data = row.data();
+                            return "<h2 class='text-center'><span class='badge badge-secondary'>Detalles</span></h2>";
+                        }
+                    } ),
+                    renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+                        tableClass: 'table'
+                    } )
+                }
+            },
             "language":{
                 "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
             }
+        } );
+        $('#table_matriz').on("draw.dt", function(){
+            $('[data-toggle="tooltip"]').tooltip();
         });
+    } );
 </script>
