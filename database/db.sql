@@ -81,6 +81,7 @@ CREATE TABLE tbl_hallazgos(
     nombre_usuario varchar(50) NOT NULL,
     fecha timestamp DEFAULT NOW(),
     fecha_ejecucion timestamp DEFAULT NOW(),
+    fecha_final timestamp NULL,
     sede varchar(100) NOT NULL,
     area varchar(100) NOT NULL,
     lugar_hallazgo varchar(150) DEFAULT '',
@@ -122,18 +123,18 @@ CREATE TABLE tbl_historial_estado(
     nuevo_estado varchar(50) NOT NULL DEFAULT '',
     razon_cambio text NOT NULL DEFAULT '',
     fecha_cambio timestamp NOT NULL DEFAULT NOW(),
-    id_hallazgo int,
+    id_usuario int,
     PRIMARY KEY (id_cambio_estado),
-    CONSTRAINT fk_cambio FOREIGN KEY(id_hallazgo) REFERENCES tbl_hallazgos(id_hallazgo) ON DELETE CASCADE
+    CONSTRAINT fk_usuario FOREIGN KEY(id_usuario) REFERENCES tbl_usuarios(id_usuario) ON DELETE CASCADE
 );
 
 CREATE TABLE tbl_img_estado(
     id_img_estado int(11) NOT NULL AUTO_INCREMENT,
     nombre_img_estado varchar(255) NOT NULL DEFAULT '',
     uploaded_at timestamp NOT NULL DEFAULT NOW(),
-    id_hallazgo int,
+    id_cambio_estado int,
     PRIMARY KEY (id_img_estado),
-    CONSTRAINT fk_img_estado FOREIGN KEY(id_hallazgo) REFERENCES tbl_hallazgos(id_hallazgo) ON DELETE CASCADE
+    CONSTRAINT fk_img_estado FOREIGN KEY(id_cambio_estado) REFERENCES tbl_historial_estado(id_cambio_estado) ON DELETE CASCADE
 );
 
 /* CREATE TABLE tbl_links(

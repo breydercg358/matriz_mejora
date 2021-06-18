@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item">Gráfico de planes por factor de riesgo</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container container_indicadores">
+    <br>
+    <h4 class="text-center text-light bg-dark col-md-4 mx-auto p-1 rounded-pill"><i class="fas fa-exclamation-triangle fa-sm fa-fw text-primary"></i>Por factores de riesgo</h4>
+    <br>
+
+    {{> chartTypes}}
+
+    <div class="col-md-8 mx-auto ChartStyles">
+        <canvas id="ChartFactores"></canvas>
+    </div>
+    <br>
+</div>

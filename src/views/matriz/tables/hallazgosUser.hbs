@@ -1,0 +1,94 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item"><a href="/tables/usuarios">Tabla usuarios</a></li>
+            <li class="breadcrumb-item">Hallazgos del usuario {{usuario.nombre_usuario}}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container">
+    <h4 class="text-center text-light bg-dark col-md-3 mx-auto p-1 rounded-pill"><i class="fas fa-search fa-sm fa-fw text-primary"></i>Hallazgos de {{usuario.nombre_persona}}</h4>
+</div>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="table-responsive col-md-11">
+            <table class="table table-hover table-striped dt-responsive nowrap cell-border text-center"
+                style="width: 100%;" id="table_matriz">
+                <thead class="thead-dark">
+                    <tr>
+                        {{!--<th scope="col">ID</th>--}}
+                        <th scope="col"><b>Nombre del hallazgo</th>
+                        <th scope="col"><b>Nombre completo</b></th>
+                        <th scope="col"><b>Formulario realizado</b></th>
+                        <th scope="col"><b>Sede</b></th>
+                        <th scope="col"><b>Área</b></th>
+                        <th scope="col"><b>Lugar exacto del hallazgo</b></th>
+                        <th scope="col"><b>Responsable/s</b></th>
+                        <th scope="col"><b>Descripción</th>
+                        <th scope="col"><b>Tipo de hallazgo</b></th>
+                        <th scope="col"><b>Fuente</b></th>
+                        <th scope="col"><b>Factor de riesgo</b></th>
+                        <th scope="col"><b>Prioridad</b></th>
+                        <th scope="col"><b>Estado</b></th>
+                        <th scope="col"><b>Ejecución planeada</b></th>
+                        <th scope="col"><b>Ejecución final</b></th>
+                        <th scope="col"><b>Plan de acción sugerido</b></th>
+                        <th scope="col"><b>Otras observaciones</b></th>
+                        <th scope="col"><b>Registro fotográfico</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each SelectHallazgosUsuario}}
+                    <tr>
+                        {{!--<td class="align-middle">{{id_hallazgo}}</td>--}}
+                        <td class="align-middle">
+                            {{#if (CurrentStatus estado "EJECUTADO")}}
+                                <i class="fas fa-check-circle fa-fw text-success" title="Ejecutado" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{#if (CurrentStatus estado "NO EJECUTADO")}}
+                                <i class="fas fa-times-circle fa-fw text-danger" title="No ejecutado" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{#if (CurrentStatus estado "EN PROCESO")}}
+                                <i class="fas fa-spinner fa-fw text-warning" title="En proceso" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{nombre_hallazgo}}</td>
+                        <td class="align-middle">{{nombre_persona}}</td>
+                        <td class="align-middle" id="fecha_hallazgo" data-toggle="tooltip" data-toggle>
+                            <a class="a_dates" data-toggle="collapse"
+                                data-target="#collapseFechaHallazgoInfo{{@index}}">{{timeago fecha}}</a>
+                            <div class="collapse" id="collapseFechaHallazgoInfo{{@index}}">
+                                <i>{{ dateFormat fecha format='dddd[,] D [de] MMMM [de] YYYY'}}</i>
+                            </div>
+                        </td>
+                        <td class="align-middle">{{sede}}</td>
+                        <td class="align-middle">{{area}}</td>
+                        <td class="align-middle">{{lugar_hallazgo}}</td>
+                        <td class="align-middle">{{responsable}}</td>
+                        <td class="align-middle">{{descripcion}}</td>
+                        <td class="align-middle">{{tipo_hallazgo}}</td>
+                        <td class="align-middle">{{fuente}}</td>
+                        <td class="align-middle">{{factor_riesgo}}</td>
+                        <td class="align-middle">{{prioridad}}</td>
+                        <td class="align-middle"><span>{{estado}}</span></td>
+                        <td class="align-middle" data-toggle="tooltip">
+                            <a class="a_dates" data-toggle="collapse"
+                                data-target="#collapseFechaEjecucionHallazgoInfo{{@index}}">{{timeago fecha_ejecucion}}</a>
+                            <div class="collapse" id="collapseFechaEjecucionHallazgoInfo{{@index}}">
+                                <i>{{ dateFormat fecha_ejecucion format='dddd[,] D [de] MMMM [de] YYYY'}}</i>
+                            </div>
+                        </td>
+                        <td>{{dateFormat fecha_final format='D [de] MMMM [de] YYYY'}}</td>
+                        <td class="align-middle">{{plan_sugerido}}</td>
+                        <td class="align-middle">{{otras_observaciones}}</td>
+                        <td><a href="/hallazgos/registro_fotografico?id={{id_hallazgo}}" target="_blank"
+                                class="btn btn-outline-primary rounded-0">Ver</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

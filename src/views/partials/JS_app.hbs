@@ -258,6 +258,65 @@
             }
         });
 
+        // Validar formulario de cambio de estado
+        $("form[name='form_cambio_estado']").validate({
+            rules: {
+                nuevo_estado: "required",
+                razon_cambio: "required",
+                registro_fotografico_cambio: {
+                    accept: "image/*"
+                }
+            },
+            messages: {
+                nuevo_estado: "Por favor seleccione el nuevo estado del hallazgo",
+                razon_cambio: "Ingrese la razón por la que desea realizar el cambio de estado",
+                registro_fotografico_cambio: {
+                    accept: "Escoge solo archivos que sean imagenes"
+                }
+            },
+            submitHandler: function (form){
+                form.submit();
+            }
+        });
+
+        // Validar formulario de nuevo registro fotográfico
+        $("form[name='new_registro_img']").validate({
+            rules: {
+                new_registro_fotografico: {
+                    required: true,
+                    accept: "image/*"
+                }
+            },
+            messages: {
+                new_registro_fotografico: {
+                    required: "Escoge por lo menos 1 imagen",
+                    accept: "Escoge solo archivos que sean imagenes"
+                }
+            },
+            submitHandler: function (form){
+                form.submit();
+            }
+        });
+
+        // Validar formulario de nuevas imagenes en cambio de estado
+        $("form[name='form_img_cambio']").validate({
+            rules: {
+                new_registro_fotografico_cambio: {
+                    required: true,
+                    accept: "image/*"
+                }
+            },
+            messages: {
+                new_registro_fotografico_cambio: {
+                    required: "Escoge por lo menos 1 imagen",
+                    accept: "Escoge solo archivos que sean imagenes"
+                }
+            },
+            submitHandler: function (form){
+                form.submit();
+            }
+        }); 
+
         // Show or hide password field/s
         $("#toggle").change(function () {
             if ($(this).is(':checked')) {
@@ -268,9 +327,8 @@
                 $("#confirm_pwd").attr("type", "password");
             }
         });
-
-        bsCustomFileInput.init();
     });
+
 
     // Verify if 2 passwords match in the same form
     $('#password, #confirm_pwd').on('keyup', function () {
@@ -323,12 +381,19 @@
             wrap: true,
             locale: "es"
         });
-        $('.calendario_edit').flatpickr({
-            enableTime: true,
+        $('.calendario_edit_realizacion').flatpickr({
             time_24hr: true,
             altInput: true,
             altFormat: "l - F j, Y",
-            dateFormat: "Y-m-d",
+            dateFormat: "Y-m-d H:i",
+            wrap: true,
+            locale: "es"
+        });
+        $('.calendario_edit_ejecucion').flatpickr({
+            time_24hr: true,
+            altInput: true,
+            altFormat: "l - F j, Y",
+            dateFormat: "Y-m-d H:i",
             wrap: true,
             locale: "es"
         });
@@ -341,44 +406,112 @@
         });
     });
 
-    // DYNAMIC QUERY sedes-areas
+    // DYNAMIC QUERIES
     $(document).ready(function(){
 
-    $('input#new_registro_fotografico').change(function(){
-       var files = $(this)[0].files;
-       var ImgTotal = document.getElementById('ImgValue').value;
-       var IntImgTotal = parseInt(ImgTotal);
-       var TotalSumImg = IntImgTotal + files.length;
-       if(TotalSumImg > 10){
-            $('#TextNoNewImg').append("<br><p class='text-danger text-center'><i class='fas fa-times-circle fa-fw'></i>El hallazgo no puede quedar con <strong>" + TotalSumImg + "</strong> registros fotográficos.</p>");
-            $('#btn_no_agregar').append("<button type='submit' class='btn btn-outline-success rounded-0' title='No es posible enviar las imagenes elegidas' data-toggle='tooltip' disabled>Subir registro/s</button>");
-            $('#btn_agregar').empty();
-            $('#TextNewImg').empty();
-       }else if(TotalSumImg <= 10 && files.length >= 1){
-            $('#btn_agregar').append("<button type='submit' class='btn btn-outline-success rounded-0'>Subir registro/s</button>");
-            $('#TextNewImg').append("<br><p class='text-success text-center'><i class='fas fa-check-circle fa-fw'></i>Listo para subir <br> <strong>Número final de imagenes en el hallazgo:</strong> " + TotalSumImg + "</p>");
-            $('#btn_no_agregar').empty();
-            $('#TextNoNewImg').empty();
-       }
-    });
-
-    $('#sede').change(function(){
-        var item = $('#sede').val();
-
-        $.ajax({
-            type:'GET',
-            data: { id_sede: item },
-            url:'/form_hallazgos/sede',
-            success: function(data){
-                console.log(data);
-                $('#area').empty();
-                $('area').append("<option disabled selected>Seleccione un área</option>");
-                $.each(data, function(index, areaObj){
-                    $('#area').append("<option value='" + areaObj.nombre_area + "' > " + areaObj.nombre_area + " </option> ");
-                });
+        // VALIDATE WHEN UPLOADING NEW IMAGES
+        $('input#new_registro_fotografico').change(function(){
+        var files = $(this)[0].files;
+        var ImgTotal = document.getElementById('ImgValue').value;
+        var IntImgTotal = parseInt(ImgTotal);
+        var TotalSumImg = IntImgTotal + files.length;
+        if(TotalSumImg > 10){
+                $('#BtnAddNewImg').prop('disabled', true);
+                $('#BtnAddNewImg').attr('title', 'No puedes añadir al hallazgo demasiados registros.');
+                $('#TextNoNewImg').append("<br><p class='text-danger text-center'><i class='fas fa-times-circle fa-fw'></i>El hallazgo no puede quedar con <strong>" + TotalSumImg + "</strong> registros fotográficos.</p>");
+                $('#TextNewImg').empty();
+        }else if(TotalSumImg <= 10 && files.length >= 1){
+                $('#BtnAddNewImg').prop('disabled', false);
+                $('#TextNewImg').append("<br><p class='text-success text-center'><i class='fas fa-check-circle fa-fw'></i>Listo para subir <br> <strong>Número final de imagenes en el hallazgo:</strong> " + TotalSumImg + "</p>");
+                $('#TextNoNewImg').empty();
             }
         });
-    });
+
+        // VALIDATE WHEN UPLOADING IMAGES INTO A NEW 'HALLAZGO'
+        $('input#registro_fotografico').change(function(){
+        var files = $(this)[0].files;
+        if(files.length > 10){
+            $('#message_img_F').append("<p class='text-danger text-center'><i class='fas fa-times-circle fa-fw'></i>No puedes agregar más de <b>10</b> imagenes por hallazgo</p>");
+            $('#message_img_T').empty();
+            $('#message_info_img').empty();
+            $('#enviar_form_hallazgos').prop('disabled', true);
+            $('#enviar_form_hallazgos').attr('title', 'No se puede enviar el formulario. Revisa si este posee algun error en uno de sus campos.');
+        }else{
+            $('#message_img_T').append("<p class='text-success text-center'>Listo para subir <b>" + files.length  + "</b> registro/s</p>");
+            $('#message_img_F').empty();
+            $('#message_info_img').empty();
+            $('#enviar_form_hallazgos').prop('disabled', false);
+            $('#enviar_form_hallazgos').removeAttr('title');
+           }
+        });
+
+        // VALIDAR AL SUBIR IMAGENES CUANDO SE CAMBIA EL ESTADO DE UN HALLAZGO
+        $('input#registro_fotografico_cambio').change(function(){
+            var files = $(this)[0].files;
+            if(files.length > 5){
+                $('#MessageCambioImgF').append("<p class='text-danger text-center'>No puedes agregar más de <b>5</b> imagenes al cambiar el estado de un hallazgo.</p>");
+                $('#MessageInfoCambio').empty();
+                $('#MessageCambioImgT').empty();
+                $('#BtnAgregarCambio').prop("disabled", true);
+            }else{
+                $('#MessageCambioImgT').append('<p class="text-success text-center">Listo para subir <b>' + files.length + '</b> registro/s.</p>');
+                $('#MessageInfoCambio').empty();
+                $('#MessageCambioImgF').empty();
+                $('#BtnAgregarCambio').prop("disabled", false);
+            }
+        });
+
+        // VALIDAR CUANDO SE SUBEN NUEVAS IMAGENES EN LA EDICIÓN DE UN CAMBIO DE ESTADO
+        $('input#new_registro_fotografico_cambio').change(function(){
+            var files = $(this)[0].files;
+            var ImgTotalCambio = document.getElementById('ImgValueCambio').value;
+            var IntImgTotalCambio = parseInt(ImgTotalCambio);
+            var TotalSumImgCambio = IntImgTotalCambio + files.length;
+            if(TotalSumImgCambio > 5){
+                    $('#BtnAddNewImgCambio').prop('disabled', true);
+                    $('#BtnAddNewImgCambio').attr('title', 'No puedes añadir al cambio de estado demasiados registros.');
+                    $('#TextNoNewImgCambio').append("<br><p class='text-danger text-center'><i class='fas fa-times-circle fa-fw'></i>El cambio de estado no puede quedar con <strong>" + TotalSumImgCambio + "</strong> registros fotográficos.</p>");
+                    $('#TextNewImgCambio').empty();
+            }else if(TotalSumImgCambio <= 5 && files.length >= 1){
+                    $('#BtnAddNewImgCambio').prop('disabled', false);
+                    $('#BtnAddNewImgCambio').removeAttr('title', '');
+                    $('#TextNewImgCambio').append("<br><p class='text-success text-center'><i class='fas fa-check-circle fa-fw'></i>Listo para subir <br> <strong>Número final de imagenes en el cambio de estado:</strong> " + TotalSumImgCambio + "</p>");
+                    $('#TextNoNewImgCambio').empty();
+                }
+        });
+
+        /* AÑADIR CAMPOS CUANDO SE DESEA CAMBIAR EL ESTADO DE UN HALLAZGO
+        $('select#cambiar_estado').change(function(){
+            var item = $('select#nombre_estado_cambio').val();
+            console.log(item);
+            $('#textarea_cambiar').append("<label for='explicacion'>¿Por qué desea cambiar el estado del hallazgo? <b class='text-danger'>*</b></label> <div class='input-group'> <span class='input-group-text bg-transparent border_hallazgos'><i class='fas fa-question-circle'></i></span><textarea class='form-control rounded-0' rows='2' name='cambio_estado_txt' id='cambio_estado_txt' placeholder='Escribe aquí...'></textarea></div>");
+            $.ajax({
+                type: 'GET',
+                data: { nombre_estado: item },
+                url: '/table_hallazgos/estado',
+                success: function(data){
+                    console.log(data);
+                }
+            });
+        });*/
+
+        // DYNAMIC QUERY FOR 'sedes-areas'
+        $('#sede').change(function(){
+            var item = $('#sede').val();
+
+            $.ajax({
+                type:'GET',
+                data: { id_sede: item },
+                url:'/form_hallazgos/sede',
+                success: function(data){
+                    $('#area').empty();
+                    $('area').append("<option disabled selected>Seleccione un área</option>");
+                    $.each(data, function(index, areaObj){
+                        $('#area').append("<option value='" + areaObj.nombre_area + "' > " + areaObj.nombre_area + " </option> ");
+                    });
+                }
+            });
+        });
     });
     
     // Change DataTables JQuery language:

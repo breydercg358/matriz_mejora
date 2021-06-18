@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item">Tabla responsables</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container">
+    <h4 class="text-center text-light bg-dark col-md-3 mx-auto p-1 rounded-pill"><i
+            class="fas fa-users fa-sm fa-fw text-primary"></i>Responsables</h4>
+</div>
+<br>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="table-responsive col-md-8">
+            <button type="button" class="btn btn-success rounded-0 btn_agregar" data-toggle="modal"
+                data-target="#ModalAgregarResponsable">
+                <i class="fas fa-plus-circle fa-fw"></i>Agregar nuevo responsable
+            </button>
+            <br>
+            <table class="table table-hover table-striped dt-responsive nowrap cell-border text-center"
+                id="table_matriz">
+                <thead class="thead-dark text-light">
+                    <tr>
+                        {{!--<th scope="col" title="Identificador" data-toggle="tooltip">ID</th>--}}
+                        <th scope="col">Nombre del responsable</th>
+                        <th scope="col">Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each responsables}}
+                    <tr>
+                        {{!--<td class="align-middle">{{id_responsable}}</td>--}}
+                        <td class="align-middle">
+                            <a class="a_dates" data-toggle="collapse" data-target="#collapseResponsableInfo{{@index}}">{{nombre_responsable}}</a>
+                            <div class="collapse" id="collapseResponsableInfo{{@index}}">
+                                <i><b>Creado el: 
+                                <br>
+                                </b>{{dateFormat created_at format='DD-MM-YYYY [a las] h:mm:ss a'}}</i>
+                                <br>
+                                <i><b>Actualizado el: 
+                                <br>
+                                </b>{{dateFormat updated_at format='DD-MM-YYYY [a las] h:mm:ss a'}}</i>
+                            </div>
+                        </td>
+                        <td class="align-middle">
+                            <a href="/tables/responsables/edit/{{id_responsable}}" class="btn btn-primary btn_tables_editar"
+                                data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                        </td>
+                        {{!-- MODAL ELIMINAR RESPONSABLE --}}
+                        <div class="modal fade" id="ModalEliminarResponsable{{@index}}" tabindex="-1"
+                            aria-labelledby="EliminarResponsableLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-md">
+                                <div class="modal-content rounded-0">
+                                    <div class="modal-body">
+                                        <span class="text-danger d-flex justify-content-center">
+                                            <i class="fas fa-times-circle fa-3x"></i>
+                                        </span>
+                                        <br>
+                                        <h5 class="text-center">¿Desea eliminar al responsable<br>
+                                            '{{nombre_responsable}}'?</h5>
+                                        <small class="text-muted d-flex justify-content-center">Este cambio no podrá ser revertido</small>
+                                        <br>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <a href="/tables/responsables/delete/{{id_responsable}}"
+                                                class="btn btn-outline-danger rounded-0">Sí (eliminar)</a>
+                                            <button type="button" class="btn btn-outline-success rounded-0"
+                                                data-dismiss="modal">No (volver)</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- FIN MODAL ELIMINAR RESPONSABLE --}}
+                        <td>
+                            <button type="button" class="btn btn-outline-danger btn_tables_eliminar" data-dismiss="modal" data-toggle="modal"
+                                data-target="#ModalEliminarResponsable{{@index}}"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{> modals}}

@@ -1,0 +1,252 @@
+{{!-- BREADCRUMB ADMINS --}}
+{{#if (isAdministrator user.rol "Administrador")}}
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/tables/hallazgos">Tabla hallazgos</a></li>
+            <li class="breadcrumb-item">Formulario de hallazgos</li>
+        </ol>
+    </nav>
+</div>
+{{/if}}
+
+{{!-- BREADCRUMB AND WELCOME MESSAGE FOR BASIC USERS --}}
+{{#if (isBasicUser user.rol "Estándar")}}
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/table_hallazgos/{{user.id_usuario}}">Tabla hallazgos</a></li>
+            <li class="breadcrumb-item">Formulario de hallazgos</li>
+        </ol>
+    </nav>
+</div>
+{{/if}}
+
+<h3 class="modal-title col-md-7 mx-auto text-center bg-dark text-light" id="exampleModalLabel">Formulario de hallazgos
+</h3>
+<div class="card col-md-7 mx-auto card_hallazgos">
+    <div class="card-body rounded-0">
+        <form action="/forms/form_hallazgos/{{user.id_usuario}}" name="form_hallazgos" class="form_hallazgos" method="POST"
+            enctype="multipart/form-data">
+            <input type="hidden" class="form-control" name="id_usuario" value="{{user.id_usuario}}">
+            <label for="nombre_persona">Nombre completo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-dark-50 borderless_hallazgos">
+                    <i class="fas fa-signature"></i>
+                </span>
+                <input class="form-control" type="text" value="{{user.nombre_persona}}" name="nombre_persona"
+                    id="nombre_persona" readonly="read-only">
+            </div>
+            <div class="input-group">
+                <input class="form-control" type="hidden" value="{{user.nombre_usuario}}" name="nombre_usuario"
+                    id="nombre_usuario" readonly="readonly">
+            </div>
+            <label for="nombre_hallazgo">Nombre del hallazgo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-sticky-note"></i>
+                </span>
+                <input class="form-control" type="text" name="nombre_hallazgo" id="nombre_hallazgo"
+                    placeholder="Escribe aquí el nombre del hallazgo...">
+            </div>
+            <label for="fecha">Fecha de realización <b class="text-danger">*</b></label>
+            <div class="input-group calendario">
+                <input type="text" class="form-control bg-transparent" name="fecha" id="fecha" data-input>
+                <span class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                    <i class="fas fa-calendar"></i>
+                </span>
+                <span class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark" title="Quitar fecha"
+                    data-clear>
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <label for="sede">Sede <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-building"></i>
+                </span>
+                <select class="custom-select rounded-0" name="sede" id="sede">
+                    <option selected disabled>Seleccione una sede</option>
+                    {{#each sedes}}
+                    <option value="{{id_sede}}">{{nombre_sede}}</option>
+                    {{else}}
+                    <option disabled>Aún no hay sedes creadas</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="area">Área <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-map-marker-alt"></i>
+                </span>
+                <select class="custom-select rounded-0" name="area" id="area">
+                    <option selected disabled>Seleccione un área</option>
+                </select>
+            </div>
+            <label for="lugar_hallazgo">Lugar exacto del hallazgo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-map-signs"></i>
+                </span>
+                <input class="form-control" type="text" name="lugar_hallazgo" id="lugar_hallazgo"
+                    placeholder="Escribe aquí el lugar exacto donde viste el hallazgo...">
+            </div>
+            <label for="responsable"><i class="fas fa-users p-2"></i>Responsable/s <b class="text-danger">*</b></label>
+            <div class="custom-control custom-checkbox check_responsable" name="responsable_checkbox"
+                id="responsable_checkbox">
+                {{#each responsables}}
+                <div class="row p-2">
+                    <div class="col">
+                        <input type="checkbox" class="custom-control-input" value="{{nombre_responsable}}"
+                            name="responsable" id="{{id_responsable}}">
+                        <label class="custom-control-label label_responsable" for="{{id_responsable}}">
+                            {{nombre_responsable}}
+                        </label>
+                    </div>
+                </div>
+                {{else}}
+                <i>Aún no hay responsables creados</i>
+                {{/each}}
+            </div>
+            <label for="descripcion">Descripción <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-align-left"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="3" name="descripcion" id="descripcion"
+                    placeholder="Escribe aquí la descripción del hallazgo..."></textarea>
+            </div>
+            <label for="tipo_hallazgo">Tipo de hallazgo <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-folder"></i>
+                </span>
+                <select class="custom-select rounded-0" name="tipo_hallazgo" id="tipo_hallazgo">
+                    <option selected disabled>Seleccione un tipo de hallazgo</option>
+                    {{#each tipos}}
+                    <option value="{{nombre_tipo}}">{{nombre_tipo}}</option>
+                    {{else}}
+                    <option disabled>Aún no hay tipos de hallazgo creados</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="fuente">Fuente <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-briefcase"></i>
+                </span>
+                <select class="custom-select rounded-0" name="fuente" id="fuente">
+                    <option selected disabled>Seleccione una fuente</option>
+                    {{#each fuentes}}
+                    <option value="{{nombre_fuente}}">{{nombre_fuente}}</option>
+                    {{else}}
+                    <option disabled>Aún no hay fuentes creadas</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="factor_riesgo">Factor de riesgo <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <select class="custom-select rounded-0" name="factor_riesgo" id="factor_riesgo">
+                    <option selected disabled>Seleccione un factor de riesgo</option>
+                    {{#each factores}}
+                    <option value="{{nombre_factor}}">{{nombre_factor}}</option>
+                    {{else}}
+                    <option disabled>Aún no hay factores de riesgo creados</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="prioridad">Prioridad <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-star"></i>
+                </span>
+                <select class="custom-select rounded-0" name="prioridad" id="prioridad">
+                    <option selected disabled>Seleccione una prioridad</option>
+                    {{#each prioridades}}
+                    <option value="{{nombre_prioridad}}">{{nombre_prioridad}}</option>
+                    {{else}}
+                    <option disabled>Aún no hay prioridades creadas</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="estado">Estado <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-signal"></i>
+                </span>
+                <select class="custom-select rounded-0" name="estado" id="estado">
+                    <option selected disabled>Seleccione un estado</option>
+                    {{#each estados}}
+                    <option class="text-light option_estado" value="{{nombre_estado}}"
+                        style="background-color: {{color_estado}};">{{nombre_estado}}</option>
+                    {{else}}
+                    <option disabled><i>Aún no hay estados creados</i></option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="fecha_ejecucion">Fecha de ejecución <b class="text-danger">*</b></label>
+            <div class="input-group calendario">
+                <input class="form-control bg-transparent" name="fecha_ejecucion" id="fecha_ejecucion" type="text"
+                    data-input>
+                <span class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                    <i class="fas fa-calendar"></i>
+                </span>
+                <span class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark" title="Quitar fecha"
+                    data-clear>
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <label for="plan_sugerido">Plan de acción sugerido <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-pencil-ruler"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="2" name="plan_sugerido" id="plan_sugerido"
+                    placeholder="Escribe aquí el plan de acción sugerido para el hallazgo..."></textarea>
+            </div>
+            <label for="otras_observaciones">Otras observaciones</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-marker"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="3" name="otras_observaciones" id="otras_observaciones"
+                    placeholder="Escribe aquí si posees otras observaciones acerca del hallazgo..."></textarea>
+            </div>
+            <label for="registro_fotografico"><i class="fas fa-image p-2"></i>Registro fotográfico <b
+                    class="text-danger">*</b></label>
+            <div class="input-group">
+                <input type="file" class="form-control rounded-0" name="registro_fotografico" id="registro_fotografico"
+                    multiple>
+                <span class="btn btn-danger input-group-text bg-transparent rounded-0 text-dark borderless_hallazgos"
+                    title="Quitar archivo/s" data-toggle="tooltip"
+                    onclick="document.getElementById('registro_fotografico').value=''">
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <small class="form-text text-muted" id="message_info_img">Puedes agregar como mínimo <b>1</b> imagen por
+                hallazgo, y hasta un
+                máximo de <b>10</b> imagenes por este.</small>
+            <p id="message_img_T"></p>
+            <p id="message_img_F"></p>
+            <br>
+
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success rounded-0"
+                    id="enviar_form_hallazgos">Enviar</button>
+                {{#if (isAdministrator user.rol "Administrador")}}
+                <a href="/tables/hallazgos" class="btn btn-outline-danger rounded-0">Cancelar</a>
+            </div>
+            {{/if}}
+            {{#if (isBasicUser user.rol "Estándar")}}
+            <a href="/tables/hallazgos/{{user.id_usuario}}" class="btn btn-outline-danger rounded-0">Cancelar</a>
+    </div>
+    {{/if}}
+    </form>
+</div>
+</div>
+<br>

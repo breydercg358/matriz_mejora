@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item"><a href="/tables/factores">Tabla factores de riesgo</a></li>
+            <li class="breadcrumb-item">Editar factor de riesgo {{FactoresEdit.nombre_factor}}</li>
+        </ol>
+    </nav>
+</div>
+<br>
+<h3 class="modal-title col-md-6 mx-auto text-center bg-dark text-light" id="exampleModalLabel">Editar factor de riesgo</h3>
+<div class="card col-md-6 mx-auto">
+    <div class="card-body rounded-0">
+        <form action="/tables/factores/edit/{{FactoresEdit.id_factor}}" method="POST" name="form_factor">
+            <div class="input-group">
+                <input type="hidden" class="form-control" name="id_factor" id="id_factor"
+                    value="{{FactoresEdit.id_factor}}" readonly="readonly">
+            </div>
+            <label for="nombre_persona">Nombre del factor de riesgo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <input type="text" class="form-control" name="nombre_factor" id="nombre_factor"
+                    value="{{FactoresEdit.nombre_factor}}" autofocus>
+            </div>
+            <br>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-success rounded-0" data-toggle="modal" data-target="#ModalEditarFactor{{@index}}">Editar</button>
+                {{!-- MODAL EDITAR FACTOR DE RIESGO --}}
+                <div class="modal fade" id="ModalEditarFactor{{@index}}" tabindex="-1"
+                    aria-labelledby="EliminarUsuarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-body rounded-0">
+                                <span class="text-primary d-flex justify-content-center">
+                                    <i class="fas fa-info-circle fa-3x"></i>
+                                </span>
+                                <br>
+                                <h5 class="text-center">¿Desea editar el factor de riesgo<br>
+                                    '{{FactoresEdit.nombre_factor}}'?</h5>
+                                <br>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success rounded-0">Sí
+                                        (editar)</button>
+                                    <button type="button" class="btn btn-outline-danger rounded-0"
+                                        data-dismiss="modal">No (cerrar ventana)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- FIN MODAL EDITAR FACTOR DE RIESGO --}}
+                <a type="button" class="btn btn-outline-danger rounded-0" href="/tables/factores">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

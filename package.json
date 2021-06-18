@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bs-custom-file-input": "^1.3.4",
+    "chartjs": "^0.3.24",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",

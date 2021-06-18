@@ -1,0 +1,422 @@
+<script>
+$(document).ready(function(){
+
+    var colorPalette = ['61, 59, 48', '240, 84, 79', '255, 200, 87', '148, 155, 160', '149, 180, 106', '160, 135, 148', '146, 201, 177', '187, 126, 140', '5, 140, 66', '52, 73, 102', '250, 130, 76', '255, 203, 71', '72, 29, 36', '247, 135, 100', '77, 80, 97', '156, 102, 21', '226, 194, 144', '0, 102, 102', '194, 1, 20', '239, 160, 11', '14, 173, 105', '77, 80, 97', '197, 40, 61', '247, 135, 100', '183, 93, 105', '72, 35, 60', '197, 40, 61', '28, 55, 56', '102, 34, 204', '52, 46, 55'];
+    var Meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+ 
+    // GRÁFICA POR PRIORIDADES
+    $.ajax({
+        type: "GET",
+        url: '/MatrizCharts/ChartPrioridadesHallazgos',
+        success: function(data){
+
+            var nombre_prioridad = [];
+            var NumChartPrioridad = [];
+            var palettePrioridades = [];
+            var borderPaletetPrioridades = [];
+
+            for(var i in data){
+                nombre_prioridad.push(data[i][1].ChartHallazgosPrioridad);
+                NumChartPrioridad.push(data[i][0].ChartHallazgosPrioridad);
+            }
+
+            for(i = 0; i < nombre_prioridad.length; i++){
+                palettePrioridades.push('rgba(' + colorPalette[i] + ', 0.7)');
+                borderPaletetPrioridades.push('rgba(' + colorPalette[i] + ', 0.9)');
+            }
+
+            var dataMapPrioridad = {
+                data: {
+                    labels: nombre_prioridad,
+                    datasets: [{
+                        label: 'Planes por prioridad',
+                        backgroundColor: palettePrioridades,
+                        borderColor: borderPaletetPrioridades,
+                        pointBackgroundColor: "white",
+                        pointRadius: 6,
+                        hoverOffset: 3,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        data: NumChartPrioridad,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfica de planes por prioridades'
+                        }
+                    },
+                    animation:{
+                        easing: "easeOutBounce"
+                    }
+                }
+            };
+
+            
+            var ctx = document.getElementById("ChartPrioridades").getContext("2d");
+            var ChartPrioridades = new Chart(ctx, {
+                type: "line",
+                data: dataMapPrioridad.data,
+                options: dataMapPrioridad.options
+            });
+
+            $('#ChartType').change(function(){
+                var SelectedChartPrioridad = $('#ChartType').val();
+                ChartPrioridades.destroy();
+                ChartPrioridades = new Chart(ctx, {
+                    type: SelectedChartPrioridad,
+                    data: dataMapPrioridad.data,
+                    options: dataMapPrioridad.options
+                });
+            });
+        }
+    });
+
+    // GRÁFICA POR ESTADOS
+    $.ajax({
+        type: "GET",
+        url: '/MatrizCharts/ChartEstadosHallazgos',
+        success: function(data){
+            var nombre_estado = [];
+            var NumChartEstado = [];
+            var paletteEstado = [];
+            var borderPaletteEstado = [];
+
+            for(var i in data){
+                nombre_estado.push(data[i][1].ChartHallazgosEstado);
+                NumChartEstado.push(data[i][0].ChartHallazgosEstado);
+            }
+
+            for(i = 0; i < nombre_estado.length; i++){
+                paletteEstado.push('rgba(' + colorPalette[i] + ', 0.7)');
+                borderPaletteEstado.push('rgba(' + colorPalette[i] + ', 0.9)');
+            }
+
+            var dataMapEstado = {
+                data: {
+                    labels: nombre_estado,
+                    datasets: [{
+                        label: 'Planes por estados del plan',
+                        backgroundColor: paletteEstado,
+                        borderColor: borderPaletteEstado,
+                        pointBackgroundColor: "white",
+                        pointRadius: 6,
+                        hoverOffset: 3,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        data: NumChartEstado,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfica de planes por prioridades'
+                        }
+                    },
+                    animation:{
+                        easing: "easeOutBounce"
+                    }
+                }
+            };
+
+            var ctx = document.getElementById("ChartEstados").getContext("2d");
+            var ChartEstado = new Chart(ctx, {
+                type: "line",
+                data: dataMapEstado.data,
+                options: dataMapEstado.options
+            });
+
+            $('#ChartType').change(function(){
+                var SelectedChartEstado = $('#ChartType').val();
+                ChartEstado.destroy();
+                ChartEstado = new Chart(ctx, {
+                    type: SelectedChartEstado,
+                    data: dataMapEstado.data,
+                    options: dataMapEstado.options
+                });
+            });
+        }
+    });
+
+    // GRÁFICA POR FACTORES DE RIESGO
+    $.ajax({
+        type: "GET",
+        url: '/MatrizCharts/ChartFactoresHallazgos',
+        success: function(data){
+            var nombre_factor = [];
+            var NumChartFactor = [];
+            var paletteFactores = [];
+            var borderPaletteFactores = [];
+
+            for(var i in data){
+                nombre_factor.push(data[i][1].ChartHallazgosFactor);
+                NumChartFactor.push(data[i][0].ChartHallazgosFactor);
+            }
+
+            for(i = 0; i < nombre_factor.length; i++){
+                paletteFactores.push('rgba(' + colorPalette[i] + ', 0.7)');
+                borderPaletteFactores.push('rgba(' + colorPalette[i] + ', 0.9)');
+            }
+
+            dataMapFactor = {
+                data: {
+                    labels: nombre_factor,
+                    datasets: [{
+                        label: 'Planes por factor de riesgo',
+                        backgroundColor: paletteFactores,
+                        borderColor: borderPaletteFactores,
+                        pointBackgroundColor: "white",
+                        pointRadius: 6,
+                        hoverOffset: 3,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        data: NumChartFactor,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfica de planes por factores de riesgo'
+                        }
+                    },
+                    animation:{
+                        easing: "easeOutBounce"
+                    }
+                }
+            };
+
+            var ctx = document.getElementById("ChartFactores").getContext("2d");
+            var ChartFactor = new Chart(ctx, {
+                type: "line",
+                data: dataMapFactor.data,
+                options: dataMapFactor.options
+            });
+
+            $('#ChartType').change(function(){
+                var SelectedChartFactor = $('#ChartType').val();
+                ChartFactor.destroy();
+                ChartFactor = new Chart(ctx, {
+                    type: SelectedChartFactor,
+                    data: dataMapFactor.data,
+                    options: dataMapFactor.options
+                });
+            });
+        }
+    });
+
+    // GRÁFICA POR ÁREAS
+    $("Select#SelectChartAreas").change(function() {
+        var itemChartSede = $(this).val();
+
+        if(itemChartSede == "MostrarTodasAreas"){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/AllAreas',
+                success: function(data){
+                    var AllNombreAreas = [];
+                    var AllDataChartAreas = [];
+                    var paletteAllAreas = [];
+                    var borderPaletteAllAreas = [];
+
+                    for(var i in data){
+                        AllNombreAreas.push(data[i][1].IndicadorAllAreas);
+                        AllDataChartAreas.push(data[i][0].IndicadorAllAreas);
+                    }
+
+                    for(var i = 0; i < AllNombreAreas.length; i++){
+                        paletteAllAreas.push('rgba(' + colorPalette[i] + ', 0.7)');
+                        borderPaletteAllAreas.push('rgba(' + colorPalette[i] + ', 0.9)');
+                    }
+
+                var ctx = document.getElementById("ChartAreas").getContext("2d");
+                window.ChartAllArea = new Chart(document.getElementById("ChartAreas").getContext("2d"), { 
+                    type: 'line',
+                    data: {
+                        labels: AllNombreAreas,
+                        datasets: [{
+                            label: 'Planes por áreas',
+                            backgroundColor: paletteAllAreas,
+                            borderColor: borderPaletteAllAreas,
+                            pointBackgroundColor: "white",
+                            pointRadius: 4,
+                            hoverOffset: 3,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.2,
+                            data: AllDataChartAreas,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                fill: true,
+                                text: 'Gráfica de planes por áreas'
+                            }
+                        },
+                        animation:{
+                            easing: "easeOutBounce"
+                        }
+                    }
+                });
+
+                $("Select#SelectChartAreas").change(function() {
+                    ChartAllArea.destroy();
+                    ChartAllArea = new Chart(ctx, {
+                        data: ChartAllArea.data,
+                        options: ChartAllArea.options
+                    });
+                });
+
+                }
+            });
+        }
+
+        $.ajax({
+            type: "GET",
+            data: { id_sede: itemChartSede },
+            url: '/MatrizCharts/ChartAreasHallazgos',
+            success: function(data){
+
+                var nombre_area = [];
+                var NumChartAreas = [];
+                var paletteAreas = [];
+                var borderPaletteAreas = [];
+
+                for(var i in data){
+                    nombre_area.push(data[i][1].ChartHallazgosAreas);
+                    NumChartAreas.push(data[i][0].ChartHallazgosAreas);
+                }
+
+                for(var i = 0; i < nombre_area.length; i++){
+                    paletteAreas.push('rgba(' + colorPalette[i] + ', 0.7)');
+                    borderPaletteAreas.push('rgba(' + colorPalette[i] + ', 0.9)');
+                }
+
+                var ctx = document.getElementById("ChartAreas").getContext("2d");
+                window.ChartArea = new Chart(document.getElementById("ChartAreas").getContext("2d"), { 
+                    type: 'line',
+                    data: {
+                        labels: nombre_area,
+                        datasets: [{
+                            label: 'Planes por áreas',
+                            backgroundColor: paletteAreas,
+                            borderColor: borderPaletteAreas,
+                            pointBackgroundColor: "white",
+                            pointRadius: 4,
+                            hoverOffset: 3,
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.2,
+                            data: NumChartAreas,
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                fill: true,
+                                text: 'Gráfica de planes por áreas'
+                            }
+                        },
+                        animation:{
+                            easing: "easeOutBounce"
+                        }
+                    }
+                });
+
+                $("Select#SelectChartAreas").change(function() {
+                    ChartArea.destroy();
+                    ChartArea = new Chart(ctx, {
+                        data: ChartArea.data,
+                        options: ChartArea.options
+                    });
+                });
+
+                /*$('#ChartType').change(function(){
+                    var SelectedChartArea = $('#ChartType').val();
+                    ChartTypeArea.push(SelectedChartArea);
+                    ChartArea.destroy();
+                    ChartArea = new Chart(ctx, {
+                        data: ChartArea.data,
+                        options: ChartArea.options
+                    });
+                });*/
+            }
+        });
+    });
+
+    // GRÁFICA POR MESES
+    $.ajax({
+        type: "GET",
+        url: '/MatrizCharts/ChartMesesHallazgos',
+        success: function(data){
+            var NomMesesChart = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            var NumHallazgosMeses = [];
+            var paletteMeses = [];
+            var borderPaletteMeses = [];
+
+            for(var i in data){
+                NumHallazgosMeses.push(data[i][0].ChartDates);
+            }
+            for(var i = 0; i < NomMesesChart.length; i++){
+                paletteMeses.push('rgba(' + colorPalette[i] + ', 0.7)');
+                borderPaletteMeses.push('rgba(' + colorPalette[i] + ', 0.9)');
+            }
+
+            dataMapMes = {
+                data: {
+                    labels: NomMesesChart,
+                    datasets: [{
+                        label: 'Planes por mes',
+                        backgroundColor: paletteMeses,
+                        borderColor: borderPaletteMeses,
+                        pointBackgroundColor: "white",
+                        pointRadius: 6,
+                        hoverOffset: 3,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.2,
+                        data: NumHallazgosMeses,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Gráfica de planes por mes'
+                        }
+                    },
+                    animation: {
+                        easing: "easeOutBounce"
+                    }
+                }
+            };
+
+            var ctx = document.getElementById("ChartMeses").getContext("2d");
+            var ChartMes = new Chart(ctx, {
+                type: "line",
+                data: dataMapMes.data,
+                options: dataMapMes.options
+            });
+
+            $('#ChartType').change(function(){
+                var SelectedChartMes = $('#ChartType').val();
+                ChartMes.destroy();
+                ChartMes = new Chart(ctx, {
+                    type: SelectedChartMes,
+                    data: dataMapMes.data,
+                    options: dataMapMes.options
+                });
+            });
+        }
+    });
+
+});
+</script>

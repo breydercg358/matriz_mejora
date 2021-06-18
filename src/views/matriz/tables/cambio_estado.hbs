@@ -1,0 +1,51 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item">Tabla historial de cambios de estado</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container">
+    <h4 class="text-center text-light bg-dark col-md-5 mx-auto p-1 rounded-pill"><i class="fas fa-history fa-sm fa-fw text-primary"></i>
+        Historial de cambios de estado
+    </h4>
+</div>
+<br>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="table-responsive col-md-10">
+            <table class="table table-hover table-striped dt-responsive nowrap cell-border text-center" id="table_matriz">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre del hallazgo</th>
+                        <th>Nuevo estado</th>
+                        <th>Razón del cambio</th>
+                        <th>Fecha del cambio</th>
+                        <th>Nuevo registro fotográfico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cambio_estado}}
+                    <tr>
+                        <td class="align-middle">{{nombre_hallazgo}}</td>
+                        <td class="align-middle">{{nuevo_estado}}</td>
+                        <td class="align-middle">{{razon_cambio}}</td>
+                        <td class="align-middle">
+                            <a class="a_dates" data-toggle="collapse" data-target="#collapseFechaCambioEstado{{@index}}">{{dateFormat fecha_cambio format='dddd[,] D [de] MMMM [de] YYYY'}}</a>
+                            <div class="collapse" id="collapseFechaCambioEstado{{@index}}">
+                                <i>{{dateFormat fecha_cambio format='[a las] h:mm:ss a'}}</i>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="/cambio_estado/registro_fotografico?id={{id_cambio_estado}}" class="btn btn-outline-primary align-middle rounded-0" target="_blank">Ver</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

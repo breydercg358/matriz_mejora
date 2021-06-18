@@ -18,8 +18,14 @@
     </div>
 </div>
 
+<div class="container">
+    <h4 class="text-center text-light bg-dark col-md-3 mx-auto p-1 rounded-pill"><i
+            class="fas fa-chart-pie fa-sm fa-fw text-primary"></i>Dashboard</h4>
+</div>
+<br>
+
 <div class="container-fluid">
-    <a class="btn btn-success rounded-0 col-md-3 mx-auto btn_agregar p-2" href="/form_hallazgos"><i class="fas fa-plus-circle fa-fw"></i>Agregar nuevo hallazgo</a>
+    <a class="btn btn-success rounded-0 col-md-3 mx-auto btn_agregar p-2" href="/forms/form_hallazgos"><i class="fas fa-plus-circle fa-fw"></i>Agregar nuevo hallazgo</a>
     {{!--<button class="btn btn-success rounded-0 text-center mx-auto btn_agregar" data-toggle="modal"
     data-target="#ModalAgregarHallazgo"><i class="fas fa-plus-circle fa-fw"></i>Agregar nuevo hallazgo</button> --}}
     <div class="row p-3 d-flex justify-content-center">
@@ -32,7 +38,7 @@
                     <h5 class="card-title text-center">Tabla de indicadores</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/TablaIndicadores" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>
@@ -45,7 +51,7 @@
                     <h5 class="card-title text-center">Planes por mes</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/PlanesMes" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>
@@ -55,10 +61,10 @@
                     <i class="fas fa-exclamation-circle fa-5x p-2"></i>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title text-center ">Planes por factores de riesgo</h5>
+                    <h5 class="card-title text-center ">Planes por factor de riesgo</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/PlanesFR" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>
@@ -73,7 +79,7 @@
                     <h5 class="card-title text-center">Planes por prioridad</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/PlanesPrioridad" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>
@@ -86,7 +92,7 @@
                     <h5 class="card-title text-center ">Estado del plan</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/EstadoPlan" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>
@@ -99,7 +105,7 @@
                     <h5 class="card-title text-center ">Planes por área</h5>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
+                    <a href="/dashboard/charts/PlanesArea" class="btn btn-dark btn-block rounded-0 text-light">Observar</a>
                 </div>
             </div>
         </div>

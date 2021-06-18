@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item"><a href="/tables/hallazgos">Tabla de hallazgos</a></li>
+            <li class="breadcrumb-item">Cambiar estado del hallazgo {{HallazgoCambio.nombre_hallazgo}}</li>
+        </ol>
+    </nav>
+</div>
+<br>
+<h3 class="modal-title col-md-7 mx-auto text-center bg-dark text-light" id="exampleModalLabel">Cambiar estado de <br> '{{HallazgoCambio.nombre_hallazgo}}'</h3>
+<div class="card col-md-7 mx-auto card_hallazgos">
+    <div class="card-body rounded-0">
+        <form action="/tables/hallazgos/form_cambio_estado?id_hallazgo={{HallazgoCambio.id_hallazgo}}&usuario={{user.id_usuario}}" method="POST"
+            class="form_hallazgos_cambio" name="form_cambio_estado" enctype="multipart/form-data">
+            <input type="hidden" class="form-control" id="nombre_hallazgo" name="nombre_hallazgo" value="{{HallazgoCambio.nombre_hallazgo}}" placeholder="{{HallazgoCambio.nombre_hallazgo}}" readonly>
+            <label for="nombre_sede">Estado <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-signal"></i>
+                </span>
+                <select class="custom-select" name="nuevo_estado" id="nuevo_estado">
+                    <option selected disabled>{{HallazgoCambio.estado}}</option>
+                    {{#each estados}}
+                    <option value="{{nombre_estado}}" style="background-color: {{color_estado}};">{{nombre_estado}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <br>
+            <label for="explicacion">¿Por qué desea cambiar el estado del
+                hallazgo? <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-question-circle"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="2" name="razon_cambio" id="razon_cambio"
+                    placeholder="Escribe aquí..."></textarea>
+            </div>
+            <br>
+            <label><i class="fas fa-calendar-check fa-fw text-dark-50"></i>Añadir fecha de
+                ejecución final <span class="text-danger"> (opcional) </span></label>
+            <div class="input-group calendario_cambio">
+                <input class="form-control bg-transparent" name="fecha_final" id="fecha_final" type="text" data-input>
+                <span class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                    <i class="fas fa-calendar"></i>
+                </span>
+                <span class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark" title="Quitar fecha"
+                    data-clear>
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <br>
+            <label><i class="fas fa-image fa-fw"></i>Añadir nuevo registro fotográfico <span class="text-danger">
+                    (opcional) </span></label>
+            <div class="input-group">
+                <input type="file" class="form-control rounded-0" name="registro_fotografico_cambio"
+                    id="registro_fotografico_cambio" multiple>
+                <span class="btn btn-danger input-group-text bg-transparent rounded-0 text-dark borderless_hallazgos"
+                    title="Quitar archivo/s" data-toggle="tooltip"
+                    onclick="document.getElementById('registro_fotografico_cambio').value=''"><i
+                        class="fas fa-times"></i>
+                </span>
+            </div>
+            <small class="text-muted" id="MessageInfoCambio">Puedes agregar como mínimo <b>1</b> imagen para el cambio de estado de un hallazgo, y hasta un máximo de <b>5</b> para este.</small>
+            <p id="MessageCambioImgT"></p>
+            <p id="MessageCambioImgF"></p>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success rounded-0" id="BtnAgregarCambio">Cambiar</button>
+                <a type="button" class="btn btn-outline-danger rounded-0" href="/tables/hallazgos">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+<br>

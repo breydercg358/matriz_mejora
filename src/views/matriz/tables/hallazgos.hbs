@@ -1,0 +1,275 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item">Tabla hallazgos</li>
+        </ol>
+    </nav>
+</div>
+
+{{!-- {{#if (isBasicUser user.rol "Estándar")}}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center" id="alert_success">
+                <div class="card-body">
+                    <h6>Bienvenido/a, {{user.nombre_persona}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}} --}}
+
+<div class="container">
+    {{!--<h4 class="text-center text-light bg-dark col-md-4 mx-auto p-1 rounded-pill"><i
+            class="fas fa-search fa-sm fa-fw text-primary"></i>Mis hallazgos
+        <small class="text-center d-block"><i>Número total de mis hallazgos: <strong>{{VarHallazgosUser}}</strong></i></small> --}}
+    </h4>
+    <h4 class="text-center text-light bg-dark col-md-4 mx-auto p-1 rounded-pill text_admin"><i
+            class="fas fa-search fa-sm fa-fw text-primary"></i>Hallazgos
+        {{!--<small class="text-center d-block"><i>Número total de hallazgos:
+                <strong>{{VarTotalHallazgos}}</strong></i></small>--}}
+    </h4>
+</div>
+<br>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="table-responsive col-md-11">
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <a class="btn btn-success rounded-0 text-center mx-auto btn_agregar" href="/forms/form_hallazgos"><i
+                            class="fas fa-plus-circle fa-fw"></i>Agregar nuevo hallazgo</a>
+                </div>
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="dropdown">
+                        <br>
+                        <button class="btn btn-primary dropdown-toggle col-md-12 rounded-0" type="button" id="responsable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtrar por
+                            </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <h5 class="dropdown-header">Responsable</h5>
+                            {{#each responsables}}
+                                <a class="dropdown-item" href="/hallazgos/responsable?id={{id_responsable}}">{{nombre_responsable}}</a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <table class="table table-hover table-striped dt-responsive nowrap cell-border text-center table_hallazgos"
+                style="width: 100%;" id="table_matriz">
+                <thead class="thead-dark">
+                    <tr>
+                        {{!--<th scope="col">ID</th>--}}
+                        <th scope="col"><b>Nombre del hallazgo</th>
+                        <th scope="col"><b>Nombre completo</b></th>
+                        <th scope="col"><b>Formulario realizado</b></th>
+                        <th scope="col"><b>Sede</b></th>
+                        <th scope="col"><b>Área</b></th>
+                        <th scope="col"><b>Lugar exacto del hallazgo</b></th>
+                        <th scope="col"><b>Responsable/s</b></th>
+                        <th scope="col"><b>Descripción</th>
+                        <th scope="col"><b>Tipo de hallazgo</b></th>
+                        <th scope="col"><b>Fuente</b></th>
+                        <th scope="col"><b>Factor de riesgo</b></th>
+                        <th scope="col"><b>Prioridad</b></th>
+                        <th scope="col"><b>Estado</b></th>
+                        <th scope="col"><b>Ejecución planeada</b></th>
+                        <th scope="col"><b>Ejecución final</b></th>
+                        <th scope="col"><b>Plan de acción sugerido</b></th>
+                        <th scope="col"><b>Otras observaciones</b></th>
+                        <th scope="col"><b>Registro fotográfico</b></th>
+                        <th scope="col"><b>Editar</b></th>
+                        <th scope="col"><b>Eliminar</b></th>
+                    </tr>
+                </thead>
+                <tbody id="BodyTableHallazgos">
+                    {{#each hallazgos}}
+                    <tr>
+                        {{!--<td class="align-middle">{{id_hallazgo}}</td>--}}
+                        <td class="align-middle">
+                            {{#if (CurrentStatus estado "EJECUTADO")}}
+                                <i class="fas fa-check-circle fa-fw text-success" title="Ejecutado" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{#if (CurrentStatus estado "NO EJECUTADO")}}
+                                <i class="fas fa-times-circle fa-fw text-danger" title="No ejecutado" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{#if (CurrentStatus estado "EN PROCESO")}}
+                                <i class="fas fa-spinner fa-fw text-warning" title="En proceso" data-toggle="tooltip"></i>
+                            {{/if}}
+                            {{nombre_hallazgo}}</td>
+                        <td class="align-middle">{{nombre_persona}}</td>
+                        <td class="align-middle" id="fecha_hallazgo" data-toggle="tooltip" data-toggle>
+                            <a class="a_dates" data-toggle="collapse"
+                                data-target="#collapseFechaHallazgoInfo{{@index}}">{{timeago fecha}}</a>
+                            <div class="collapse" id="collapseFechaHallazgoInfo{{@index}}">
+                                <i>{{ dateFormat fecha format='dddd[,] D [de] MMMM [de] YYYY'}}</i>
+                            </div>
+                        </td>
+                        <td class="align-middle">{{sede}}</td>
+                        <td class="align-middle">{{area}}</td>
+                        <td class="align-middle">{{lugar_hallazgo}}</td>
+                        <td class="align-middle">{{responsable}}</td>
+                        <td class="align-middle">{{descripcion}}</td>
+                        <td class="align-middle">{{tipo_hallazgo}}</td>
+                        <td class="align-middle">{{fuente}}</td>
+                        <td class="align-middle">{{factor_riesgo}}</td>
+                        <td class="align-middle">{{prioridad}}</td>
+                        <td class="align-middle"><span>{{estado}}</span> <a
+                                href="/tables/hallazgos/form_cambio_estado/{{id_hallazgo}}" type="button"
+                                class="btn btn-warning p-1 btn_tables_estado">Cambiar</button></td>
+                        <td class="align-middle" data-toggle="tooltip">
+                            <a class="a_dates" data-toggle="collapse"
+                                data-target="#collapseFechaEjecucionHallazgoInfo{{@index}}">{{timeago fecha_ejecucion}}</a>
+                            <div class="collapse" id="collapseFechaEjecucionHallazgoInfo{{@index}}">
+                                <i>{{ dateFormat fecha_ejecucion format='dddd[,] D [de] MMMM [de] YYYY'}}</i>
+                            </div>
+                        </td>
+                        <td>{{dateFormat fecha_final format='D [de] MMMM [de] YYYY'}}</td>
+                        <td class="align-middle">{{plan_sugerido}}</td>
+                        <td class="align-middle">{{otras_observaciones}}</td>
+                        <td><a href="/hallazgos/registro_fotografico?id={{id_hallazgo}}" target="_blank"
+                                class="btn btn-outline-primary rounded-0">Ver</a></td>
+                        <td>
+                            <a href="/tables/hallazgos/edit/{{id_hallazgo}}" class="btn btn-primary btn_tables_editar"
+                                title="Editar" data-toggle="tooltip"><i class="fas fa-edit"></i></a>
+                        </td>
+                        {{!-- MODAL ELIMINAR HALLAZGO --}}
+                        <div class="modal fade" id="ModalEliminarHallazgo{{@index}}" tabindex="-1"
+                            aria-labelledby="EliminarUsuarioLabel" aria-hidden="true" class="modal_eliminar_hallazgo">
+                            <div class="modal-dialog modal-dialog-centered modal-md">
+                                <div class="modal-content rounded-0">
+                                    <div class="modal-body">
+                                        <span class="text-danger d-flex justify-content-center">
+                                            <i class="fas fa-times-circle fa-3x"></i>
+                                        </span>
+                                        <br>
+                                        <h5 class="text-center">¿Desea eliminar el hallazgo<br>
+                                            #{{id_hallazgo}}?</h5>
+                                        <small class="text-mute d-flex justify-content-center">Este cambio no podrá ser
+                                            revertido y eliminará todas las fotografías dentro de este</small>
+                                        <br>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <a href="/tables/hallazgos/delete/{{id_hallazgo}}/user?idUser={{id_usuario}}"
+                                                class="btn btn-outline-danger rounded-0">Sí (eliminar)</a>
+                                            <button type="button" class="btn btn-outline-success rounded-0"
+                                                data-dismiss="modal">No (volver)</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- FIN MODAL ELIMINAR HALLAZGO --}}
+                        <td>
+                            <button type="button" class="btn btn-outline-danger btn_tables_eliminar" id="btn_eliminar"
+                                data-dismiss="modal" data-toggle="modal"
+                                data-target="#ModalEliminarHallazgo{{@index}}"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{!-- MODAL VER FOTO --}}
+{{!-- <div class="modal fade" id="ModalVerFoto" tabindex="-1" aria-labelledby="VerFotoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content body_foto rounded-0">
+            <div class="modal-header bg-dark text-light rounded-0">
+                <h3 class="modal-title" id="exampleModalLabel">{{registro_fotografico}}</h3>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-auto">
+                <img class="foto_hallazgo" src="img_hallazgos/{{registro_fotografico}}" alt="Imagen hallazgo">
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-outline-danger rounded-0" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+{{!-- MODAL CAMBIAR ESTADO --}}
+{{!--<div class="modal" id="ModalCambiarEstado{{@index}}" tabindex="-1"
+                            aria-labelledby="AgregarSedeLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                <div class="modal-content rounded-0">
+                                    <div class="modal-header bg-dark text-light rounded-0">
+                                        <h3 class="modal-title" id="exampleModalLabel">Cambiar estado</h3>
+                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/table_hallazgos/cambio_estado?id_hallazgo={{id_hallazgo}}" method="POST" class="form_hallazgos_cambio" name="form_cambio_estado">
+                                            <label for="nombre_hallazgo">Nombre del hallazgo</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-dark-50 borderless_hallazgos">
+                                                    <i class="fas fa-sticky-note"></i>
+                                                </span>
+                                                <input type="text" class="form-control" id="nombre_hallazgo_cambio" name="nombre_hallazgo_cambio" value="{{nombre_hallazgo}}" placeholder="{{nombre_hallazgo}}" readonly>
+                                            </div>
+                                            <br>
+                                            <label for="nombre_sede">Estado <b class="text-danger">*</b></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-transparent borderless_hallazgos">
+                                                    <i class="fas fa-signal"></i>
+                                                </span>
+                                                <select class="custom-select" name="cambiar_estado" id="cambiar_estado">
+                                                    <option selected disabled>{{estado}}</option>
+                                                    {{#each ../estados}}
+                                                    <option value="{{nombre_estado}}">{{nombre_estado}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <label for="explicacion">¿Por qué desea cambiar el estado del
+                                                hallazgo? <b class="text-danger">*</b></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-transparent border_hallazgos">
+                                                    <i class="fas fa-question-circle"></i>
+                                                </span>
+                                                <textarea class="form-control rounded-0" rows="2"
+                                                    name="cambio_estado_txt" id="cambio_estado_txt"
+                                                    placeholder="Escribe aquí..."></textarea>
+                                            </div>
+                                            <br>
+                                            <label><i class="fas fa-calendar-check fa-fw text-dark-50"></i>Añadir fecha de ejecución final <span class="text-danger"> (opcional) </span></label>
+                                            <div class="input-group calendario_cambio">
+                                                <input class="form-control bg-transparent" name="fecha_final" id="fecha_final"
+                                                    type="text" data-input>
+                                                <span
+                                                    class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                                                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                                                    <i class="fas fa-calendar"></i>
+                                                </span>
+                                                <span
+                                                    class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark"
+                                                    title="Quitar fecha" data-clear>
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            </div>
+                                            <br>
+                                            <label><i class="fas fa-image fa-fw"></i>Añadir nuevo registro fotográfico <span class="text-danger"> (opcional) </span></label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control rounded-0" name="registro_fotografico_cambio" id="registro_fotografico_cambio" multiple>
+                                                <span class="btn btn-danger input-group-text bg-transparent rounded-0 text-dark borderless_hallazgos" title="Quitar archivo/s" data-toggle="tooltip" onclick="document.getElementById('registro_fotografico').value=''"><i class="fas fa-times"></i></span>
+                                            </div>
+                                            <br>
+                                            <div class="modal-footer d-flex justify-content-center">
+                                                <button type="submit" class="btn btn-outline-success rounded-0">Cambiar</button>
+                                                <button type="button" class="btn btn-outline-danger rounded-0"
+                                                    data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>--}}
+{{!-- FIN MODAL CAMBIAR ESTADO --}}

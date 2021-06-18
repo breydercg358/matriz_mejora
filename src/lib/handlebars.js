@@ -43,14 +43,32 @@ hb.registerHelper("CheckLengthZero", function(v1, v2, options){
     }
 });
 
+hb.registerHelper("CurrentStatus", function(EstadoActual, v1){
+    if(EstadoActual == v1){
+        return EstadoActual = v1;
+    }
+});
+
+hb.registerHelper("CurrentPage", function(PaginaActual, valueOne){
+    if(PaginaActual == valueOne){
+        return PaginaActual == valueOne;
+    }
+});
+
+hb.registerHelper("Is", function(PaginaActual, valueOne){
+    PaginaActual == valueOne;
+    return PaginaActual == valueOne;
+});
+
 helpers.timeago = (timestamp) => {
     return format(timestamp, 'es_ES');
 };
 
 const { format, register } = require('timeago.js'); //Puede utilizar `import` para Javascript code.
-const { serializeUser } = require('passport');
+/*const { serializeUser } = require('passport');
 const { GetUserId } = require('./auth');
 const { openSync } = require('fs');
+const { userInfo } = require('os');*/
 
 register('es_ES', (number, index, total_sec) => [
     ['Justo ahora', 'Ahora mismo'],

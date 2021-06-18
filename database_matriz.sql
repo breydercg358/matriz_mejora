@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-03-2021 a las 18:46:47
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.9
+-- Tiempo de generación: 29-03-2021 a las 05:16:43
+-- Versión del servidor: 10.4.18-MariaDB
+-- Versión de PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `database_matriz`
+-- Base de datos: `matriz_prueba`
 --
 
 -- --------------------------------------------------------
@@ -111,6 +111,7 @@ CREATE TABLE `tbl_hallazgos` (
   `nombre_usuario` varchar(50) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_ejecucion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_final` timestamp NULL DEFAULT NULL,
   `sede` varchar(100) NOT NULL,
   `area` varchar(100) NOT NULL,
   `lugar_hallazgo` varchar(150) DEFAULT '',
@@ -137,9 +138,8 @@ CREATE TABLE `tbl_historial_estado` (
   `id_cambio_estado` int(11) NOT NULL,
   `nombre_hallazgo` varchar(100) NOT NULL DEFAULT '',
   `nuevo_estado` varchar(50) NOT NULL DEFAULT '',
-  `razon_cambio` text DEFAULT '',
-  `fecha_cambio` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_hallazgo` int(11) DEFAULT NULL
+  `razon_cambio` text NOT NULL DEFAULT '',
+  `fecha_cambio` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -165,7 +165,7 @@ CREATE TABLE `tbl_img_estado` (
   `id_img_estado` int(11) NOT NULL,
   `nombre_img_estado` varchar(255) NOT NULL DEFAULT '',
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_hallazgo` int(11) DEFAULT NULL
+  `id_cambio_estado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -292,8 +292,7 @@ ALTER TABLE `tbl_hallazgos`
 -- Indices de la tabla `tbl_historial_estado`
 --
 ALTER TABLE `tbl_historial_estado`
-  ADD PRIMARY KEY (`id_cambio_estado`),
-  ADD KEY `fk_cambio` (`id_hallazgo`);
+  ADD PRIMARY KEY (`id_cambio_estado`);
 
 --
 -- Indices de la tabla `tbl_images`
@@ -307,7 +306,7 @@ ALTER TABLE `tbl_images`
 --
 ALTER TABLE `tbl_img_estado`
   ADD PRIMARY KEY (`id_img_estado`),
-  ADD KEY `fk_img_estado` (`id_hallazgo`);
+  ADD KEY `fk_img_estado` (`id_cambio_estado`);
 
 --
 -- Indices de la tabla `tbl_prioridades`
@@ -438,12 +437,6 @@ ALTER TABLE `tbl_hallazgos`
   ADD CONSTRAINT `fk_hallazgo` FOREIGN KEY (`id_usuario`) REFERENCES `tbl_usuarios` (`id_usuario`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `tbl_historial_estado`
---
-ALTER TABLE `tbl_historial_estado`
-  ADD CONSTRAINT `fk_cambio` FOREIGN KEY (`id_hallazgo`) REFERENCES `tbl_hallazgos` (`id_hallazgo`) ON DELETE CASCADE;
-
---
 -- Filtros para la tabla `tbl_images`
 --
 ALTER TABLE `tbl_images`
@@ -453,7 +446,7 @@ ALTER TABLE `tbl_images`
 -- Filtros para la tabla `tbl_img_estado`
 --
 ALTER TABLE `tbl_img_estado`
-  ADD CONSTRAINT `fk_img_estado` FOREIGN KEY (`id_hallazgo`) REFERENCES `tbl_hallazgos` (`id_hallazgo`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_img_estado` FOREIGN KEY (`id_cambio_estado`) REFERENCES `tbl_historial_estado` (`id_cambio_estado`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

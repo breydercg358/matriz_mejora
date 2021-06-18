@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item"><a href="/tables/tipos_hallazgo">Tabla tipos de hallazgo</a></li>
+            <li class="breadcrumb-item">Editar tipo de hallazgo {{TiposEdit.nombre_tipo}}</li>
+        </ol>
+    </nav>
+</div>
+<br>
+<h3 class="modal-title col-md-6 mx-auto text-center bg-dark text-light" id="exampleModalLabel">Editar tipo de hallazgo</h3>
+<div class="card col-md-6 mx-auto">
+    <div class="card-body rounded-0">
+        <form action="/tables/tipos_hallazgo/edit/{{TiposEdit.id_tipo}}" method="POST" name="form_tipo">
+            <div class="input-group">
+                <input type="hidden" class="form-control" name="id_tipo" id="id_tipo"
+                    value="{{TiposEdit.id_tipo}}" readonly="readonly">
+            </div>
+            <label for="nombre_persona">Nombre del tipo de hallazgo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-folder"></i>
+                </span>
+                <input type="text" class="form-control" name="nombre_tipo" id="nombre_tipo"
+                    value="{{TiposEdit.nombre_tipo}}" autofocus>
+            </div>
+            <br>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-success rounded-0" data-toggle="modal" data-target="#ModalEditarTipo{{@index}}">Editar</button>
+                {{!-- MODAL EDITAR TIPO DE HALLAZGO --}}
+                <div class="modal fade" id="ModalEditarTipo{{@index}}" tabindex="-1"
+                    aria-labelledby="EliminarUsuarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-body rounded-0">
+                                <span class="text-primary d-flex justify-content-center">
+                                    <i class="fas fa-info-circle fa-3x"></i>
+                                </span>
+                                <br>
+                                <h5 class="text-center">¿Desea editar el tipo de hallazgo<br>
+                                    '{{TiposEdit.nombre_tipo}}'?</h5>
+                                <br>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success rounded-0">Sí
+                                        (editar)</button>
+                                    <button type="button" class="btn btn-outline-danger rounded-0"
+                                        data-dismiss="modal">No (cerrar ventana)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- FIN MODAL EDITAR TIPO DE HALLAZGO --}}
+                <a type="button" class="btn btn-outline-danger rounded-0" href="/tables/tipos_hallazgo">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>

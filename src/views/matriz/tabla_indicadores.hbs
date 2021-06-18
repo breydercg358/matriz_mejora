@@ -1,0 +1,388 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            <li class="breadcrumb-item">Tabla de indicadores</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container container_indicadores">
+    <br>
+    <h4 class="text-center text-light bg-dark col-md-3 mx-auto p-1 rounded-pill"><i
+            class="fas fa-th fa-sm fa-fw text-primary"></i>Tabla de indicadores</h4>
+    <br>
+    <div class="col-md-4 mx-auto">
+        <div class="alert alert-dark text-center borderless_alert" role="alert">
+            <i class="fas fa-hashtag"></i> ACTUAL DE <span class="text-primary">HALLAZGOS</span>: <strong>{{ StringTotalHallazgos }}</strong>
+        </div>
+    </div>
+
+    {{!-- ROW 1 --}}
+    <div class="row p-3">
+        {{!-- PLANES POR FACTOR DE RIESGO --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorFactor"
+                    type="button" data-toggle="collapse" data-target="#collapsePlanFR" aria-expanded="false"
+                    aria-controls="collapseExample" onclick="TablaIndicadorFactor()">
+                    <strong><i class="fas fa-exclamation-triangle fa-fw"></i>Por factor de riesgo</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePlanFR">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <table
+                    class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center"
+                    id="TableIndicadorFactor">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre del factor de riesgo</th>
+                            <th scope="col">Número de hallazgos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            
+                        </tr>
+                        {{!--{{else}}
+                        <tr>
+                            <td colspan="2"><i>Aún no hay factores de riesgo creados</i></td>
+                        </tr>
+                        {{/each}}--}}
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <p id="TextNumTotalFactores"></p>
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        {{!-- PLANES POR TIPO DE HALLAZGO --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorTipo"
+                    type="button" data-toggle="collapse" data-target="#collapsePlanTipo" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-folder fa-fw"></i>Por tipo de hallazgo</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePlanTipo">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <table
+                    class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center"
+                    id="TableIndicadorTipo">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre del tipo de hallazgo</th>
+                            <th scope="col">Número de hallazgos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                        {{!-- {{else}}
+                        <tr>
+                            <td colspan="2"><i>Aún no hay tipos de hallazgo creados</i></td>
+                        </tr>
+                        {{/each}}--}}
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <p id="TextNumTotalTipos"></p>
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    {{!-- ROW 2 --}}
+    <div class="row p-3">
+        {{!-- PLANES POR SEDE --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorSede"
+                    type="button" data-toggle="collapse" data-target="#collapsePlanSede" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-building fa-fw"></i>Por sede</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePlanSede">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <table
+                    class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center"
+                    id="TableIndicadorSede">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre de la sede</th>
+                            <th scope="col">Número</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                        {{!--{{else}}
+                        <tr>
+                            <td colspan="2"><i>Aún no hay sedes creadas</i></td>
+                        </tr>
+                        {{/each}}--}}
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <p class="" id="TextNumTotalSedes"></p>
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        {{!-- PLANES POR ÁREA --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary col-md-10 rounded-0 btn_indicador p-2" type="button"
+                    data-toggle="collapse" data-target="#collapsePlanArea" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-map-marker-alt fa-fw"></i>Por área</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse" id="collapsePlanArea">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <div class="panel-group" id="AccordionAreas">
+                    <div class="panel panel-default d-flex justify-content-center">
+                        <div class="panel-heading">
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-primary borderless_hallazgos">
+                                    <i class="fas fa-building fa-fw"></i>
+                                </span>
+                                <select class="custom-select borderless_hallazgos text-primary"
+                                    id="SelectIndicadorAreas">
+                                    <option selected disabled>SELECCIONE UNA SEDE</option>
+                                    {{#each DataSedes}}
+                                    <option value="{{id_sede}}">{{nombre_sede}}</option>
+                                    {{/each}}
+                                    <option value="MostrarTodas">MOSTRAR TODAS</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center" id="TableIndicadorArea">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nombre del área</th>
+                                <th scope="col">Número de hallazgos</th>
+                                <th scope="col" class="TextSede"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <div class="alert alert-dark text-center borderless_alert" role="alert">
+                        <p id="TextNumTotalAreas"></p>
+                        <p id="NumHallazgosSedeArea"></p>
+                        <i class="fas fa-hashtag fa-fw"></i> ACTUAL Y TOTAL DE <span class="text-primary">ÁREAS</span>: <strong>{{ StringTotalAreas }}</strong>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <div class="row p-3">
+        {{!-- PLANES POR PRIORIDAD --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorPrioridad"
+                    type="button" data-toggle="collapse" data-target="#collapsePlanPrioridad" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-star fa-fw"></i>Por prioridad</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePlanPrioridad">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <table
+                    class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center"
+                    id="TableIndicadorPrioridad">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre de la prioridad</th>
+                            <th scope="col">Número</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                        {{!--{{else}}
+                        <tr>
+                            <td colspan="2"><i>Aún no hay prioridades creadas</i></td>
+                        </tr>
+                        {{/each}}--}}
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <p class="" id="TextNumTotalPrioridades"></p>
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+        {{!-- ESTADO DE LOS PLANES --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-success col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorEstado"
+                    type="button" data-toggle="collapse" data-target="#collapsePlanEstado" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-signal fa-fw"></i>Estado de los planes de acción</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePlanEstado">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <table
+                    class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center"
+                    id="TableIndicadorEstado">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Nombre del estado</th>
+                            <th scope="col">Número de hallazgos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                        {{!--{{else}}
+                        <tr>
+                            <td colspan="2"><>Aún no hay estados creados</i></td>
+                        </tr>
+                        {{/each}}--}}
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <p class="" id="TextNumTotalEstados"></p>
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="row p-3">
+        {{!-- MES DEL REPORTE --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-warning col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorMes" type="button"
+                    data-toggle="collapse" data-target="#collapseMesReporte" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-calendar-day fa-fw"></i>Mes del reporte de la condición</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapseMesReporte">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <div class="modalResponsableMeses"></div>
+                <table class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center" id="TableIndicadorMes">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Mes</th>
+                            <th scope="col">Número de hallazgos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert" role="alert">
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        {{!-- PORCENTAJE DE CUMPLIMIENTO --}}
+        <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-danger col-md-10 rounded-0 btn_indicador p-2" id="BtnIndicadorPorcentaje" type="button"
+                    data-toggle="collapse" data-target="#collapsePorcentaje" aria-expanded="false"
+                    aria-controls="collapseExample">
+                    <strong><i class="fas fa-percent fa-fw"></i>Porcentaje de cumplimiento</strong> <i
+                        class="fas fa-caret-down fa-fw"></i>
+                </button>
+            </div>
+
+            <div class="collapse col-md-12 mx-auto" id="collapsePorcentaje">
+                <br>
+                <span class="openDateRangePicker"></span>
+                <span class="startDateRangePicker"></span>
+                <span class="endDateRangePicker"></span>
+                <br>
+                <div class="modalResponsablePorcentajes"></div>
+                <table class="table table-hover table-sm table-striped table-bordered dt-responsive nowrap cell-border text-center" id="TableIndicadorPorcentaje">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Cumplimiento</th>
+                            <th scope="col">Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-dark text-center borderless_alert">
+                    <span class="NumHallazgosTotalTI"></span>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<br>

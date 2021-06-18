@@ -1,0 +1,177 @@
+<script type="text/javascript">
+    $(function(){
+
+        let openSpanElems = $('.openDateRangePicker');
+        let startSpanElems = $('.startDateRangePicker');
+        let endSpanElems = $('.endDateRangePicker');
+        let numTotalHallazgosTI = $('.NumHallazgosTotalTI');
+        let openArraySpanElems = [];
+        let startArraySpanElems = [];
+        let endArraySpanElems = [];
+        let numArrayTotalHallazgosTI = [];
+        for(let i = 0; i < openSpanElems.length; i++){
+            openSelectAllSpanElems = openSpanElems[i].className = 'openDateRangePicker' + [i];
+            startSelectAllSpanElems = startSpanElems[i].className = 'startDateRangePicker' + [i];
+            endSelectAllSpanElems = endSpanElems[i].className = 'endDateRangePicker' + [i];
+            openArraySpanElems.push(openSelectAllSpanElems);
+            startArraySpanElems.push(startSelectAllSpanElems);
+            endArraySpanElems.push(endSelectAllSpanElems)
+        }
+        for(let i = 0; i < numTotalHallazgosTI.length; i++){
+            numSelectAllTotalHallazgosTI = numTotalHallazgosTI[i].className = 'NumHallazgosTotalTI' + [i];
+            numArrayTotalHallazgosTI.push(numSelectAllTotalHallazgosTI);
+        }
+
+        for(let i = 0; i < openArraySpanElems.length; i++){
+            $('.openDateRangePicker' + [i]).append('<div class="col-md-12 mx-auto"><button class="btn btn-outline-dark btn-block rounded-0 classBtnDateRange" type="button" data-toggle="collapse" data-target=#collapseDateRangePicker' + [i] + ' aria-expanded="false" aria-controls="collapseDateRangePicker" id=BtnCollapseDatePicker' + [i] + '><i class="fas fa-calendar fa-fw"></i>Filtrar por fecha<i class="fas fa-caret-down fa-fw"></i></button></div><br><div class="col-md-12"><div id=collapseDateRangePicker' + [i] + '  class="collapse classCollapseDateRangePicker"><div class="card-body"><div class="col-md-12"></div><div class="row"><div class="col-md-12"><label class="d-flex justify-content-center" for="input-group"><em><strong>Seleccione el rango de fechas requerido:</strong></em></label><div class="input-group"><span class="input-group-text bg-transparent text-success borderless_hallazgos"><i class="fas fa-arrow-circle-right fa-fw"></i></span><input class="form-control classInputDateRangeTI text-center" id=idInputDateRangeTI' + [i] + ' type="text" value="dd/mm/aaaa hasta dd/mm/aaaa"></div></div></div><br/><div class="col-md-6 mx-auto"><button type="button" class="btn btn-outline-success btn-block rounded-0 classBtnSearchTI" id=btnSearchTI' + [i] + '><i class="fas fa-search fa-fw"></i>Buscar</button></div></div></div></div>');
+            $('.NumHallazgosTotalTI' + [i]).append('<p id=NumHallazgosTotalTI' + [i] + '></p>');
+        }
+
+        moment.locale('es', {
+            months : 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+        });
+
+            let classArrayTablesNames = ['#TableIndicadorFactor tbody td.classDataNumFactores', '#TableIndicadorTipo tbody td.classDataNumTipos', '#TableIndicadorSede tbody td.classDataNumSedes', '#TableIndicadorArea tbody .classDataNumAreas', '#TableIndicadorPrioridad tbody .classDataNumPrioridades', '#TableIndicadorEstado tbody .classDataNumEstados', '#TableIndicadorMes tbody .classDataNumMeses', '#TableIndicadorPorcentaje tbody .classDataNumPorcentajes'];
+            let idArrayTablesNames = ['#idDataNumFactores', '#idDataNumTipos', '#idDataNumSedes', '#idDataNumAreas', '#idDataNumPrioridades', '#idDataNumEstados', '#idDataNumMeses', '#idDataNumPorcentajes'];
+            let ArrayDBTables = ['tbl_factores', 'tbl_tipos_hallazgo', 'tbl_sedes', 'tbl_areas', 'tbl_prioridades', 'tbl_estados', 'tbl_hallazgos', 'tbl_estados'];
+            let ArrayHallazgosColumn = ['factor_riesgo', 'tipo_hallazgo', 'sede', 'area', 'prioridad', 'estado', 'hallazgos', 'estado'];
+            let ArrayMatrizColumn = ['nombre_factor', 'nombre_tipo', 'nombre_sede', 'nombre_area', 'nombre_prioridad', 'nombre_estado', 'nombre_hallazgo', 'nombre_estado']; 
+
+            $('.classInputDateRangeTI').on('focus', function(e){
+                let valueSelectDateRange = $(this).val();
+                let sliceSelectDateRangeID = $(this).attr("id").slice(-1);
+                let inputStartDate = $('#idInputDateRangeTI' + sliceSelectDateRangeID);
+                let classvalueTableName = classArrayTablesNames[sliceSelectDateRangeID];
+                let idValueTableName = idArrayTablesNames[sliceSelectDateRangeID];
+                let valueDBTable = ArrayDBTables[sliceSelectDateRangeID];
+                let valueHallazgosColumn = ArrayHallazgosColumn[sliceSelectDateRangeID];
+                let valueMatrizColumn = ArrayMatrizColumn[sliceSelectDateRangeID];
+                let valueNumTotalHallazgosTI = numArrayTotalHallazgosTI[sliceSelectDateRangeID];
+
+                let startDate;
+                let endDate;
+
+                $('#idInputDateRangeTI' + sliceSelectDateRangeID).daterangepicker({
+                    startDate: moment().subtract(1, 'days'),
+                    endDate: moment(),
+                    showDropdowns: true,
+                    showWeekNumbers: true,
+                    ranges: {
+                        'Hoy': [moment(), moment()],
+                        'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
+                        'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
+                        'Este mes': [moment().startOf('month'), moment().endOf('month')],
+                        'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    opens: 'left',
+                    applyClass: 'btn-small btn-primary',
+                    cancelClass: 'btn-small btn-danger',
+                    locale: {
+                        applyLabel: 'Aceptar',
+                        cancelLabel: 'Cancelar',
+                        fromLabel: 'Desde',
+                        toLabel: 'Hasta',
+                        separator: ' hasta ',
+                        format: 'DD/MM/YYYY',
+                        daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi','Sa'],
+                        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        customRangeLabel: "Rango personalizado",
+                        firstDay: 1
+                    }
+                },
+            function(start, end) {
+                let pickedStartDate = $('#idInputDateRangeTI' + sliceSelectDateRangeID).data('daterangepicker').startDate.format('YYYY-MM-DD');
+                let pickedEndDate = $('#idInputDateRangeTI' + sliceSelectDateRangeID).data('daterangepicker').endDate.format('YYYY-MM-DD');
+                startDate = start;
+                endDate = end;
+                        
+                $('.classBtnSearchTI').click(function(){
+                    $.ajax({
+                        type: "GET",
+                        data: { dataStartTI: pickedStartDate, dataEndTI: pickedEndDate, NombreDBTabla: valueDBTable, ColumnaHallazgos: valueHallazgosColumn, ColumnaMatriz: valueMatrizColumn },
+                        url: '/TablaIndicadores/DateRangeTI',
+                        success: function(data){
+
+                            let NumTotalRangoFechaTI = [];
+                            let classTablaIndicadorRangoFechaTI = $(classvalueTableName);
+                            classTablaIndicadorRangoFechaTI.empty();
+                            for(var i = 0; i < data.length; i++){
+                                NumTotalRangoFechaTI.push(data[i][0].RangoFechaTI);
+                            }
+
+                            let IntHallazgosTotalesTI = NumTotalRangoFechaTI.map((i) => Number(i));
+                            let SumValoresArrayTotalHallazgosTI = IntHallazgosTotalesTI.reduce((a, b) => a + b, 0);
+                            
+                            if(classvalueTableName != '#TableIndicadorPorcentaje tbody .classDataNumPorcentajes'){
+                                    for(var i = 0; i < NumTotalRangoFechaTI.length; i++){
+                                        let ArrayDataTI = idValueTableName + [i];
+                                        $(ArrayDataTI).append('<strong>' + NumTotalRangoFechaTI[i] + '</strong>');
+                                    }
+                            }
+
+                            /*$('.' + valueNumTotalHallazgosTI).append('<p><i class="fas fa-hashtag fa-fw"></i>NÚMERO TOTAL DE HALLAZGOS: ' + SumValoresArrayTotalHallazgosTI + '</i></p>');
+                            classvalueTableName.empty();*/
+
+                            if(classvalueTableName == '#TableIndicadorPorcentaje tbody .classDataNumPorcentajes'){
+
+                                let TotalCumplimientoTI = [];
+
+                                for(let i in IntHallazgosTotalesTI){
+                                    const SumaPorcentajeFecha = IntHallazgosTotalesTI[i] / SumValoresArrayTotalHallazgosTI;
+                                    const MultPorcentajeFecha = SumaPorcentajeFecha * 100;
+                                    TotalCumplimientoTI.push(MultPorcentajeFecha.toFixed(2));
+                                }
+
+                                for(var i in TotalCumplimientoTI){
+                                    let ArrayDataPorcentajeTI = idValueTableName + [i];
+                                    $(ArrayDataPorcentajeTI).append('<strong>' + TotalCumplimientoTI[i] + '%</strong>');
+                                }
+
+                                $('.classBtnModalResponsablePorcentaje').on('click', function(){
+                                    let idBtnPorcentajeFecha = $(this).attr('id');
+                                    let valueBtnPorcentajeFecha = $('button#' + idBtnPorcentajeFecha).attr('value');
+                                    $.ajax({
+                                        type: "GET",
+                                        data: { valueBtnFechaPorcentaje: valueBtnPorcentajeFecha, startDatePorcentaje: pickedStartDate, endDatePorcentaje: pickedEndDate },
+                                        url: '/TablaIndicadores/ResponsablesPorcentajesTI',
+                                        success: function(data){
+                                            let ArrayNombreResponsablePF = [];
+                                            let ArrayDataResponsablePF = [];
+                                            let TotalResponsablePorcentajeFecha = [];
+
+                                            for(let i in data){
+                                                ArrayNombreResponsablePF.push(data[i][1].ResponsablesPorcentajesFecha);
+                                                ArrayDataResponsablePF.push(data[i][0].ResponsablesPorcentajesFecha);
+                                            }
+
+                                            var IntResponsablePorcentajeFecha = ArrayDataResponsablePF.map((i) => Number(i));
+                                            var SumValoresResponsableFecha = IntResponsablePorcentajeFecha.reduce((a, b) => a + b, 0);
+                    
+                                            for(var i in IntResponsablePorcentajeFecha){
+                                                const SumTotalResponsableFecha = IntResponsablePorcentajeFecha[i] / SumValoresResponsableFecha;
+                                                const MultTotalResponsableFecha = SumTotalResponsableFecha * 100;
+                                                TotalResponsablePorcentajeFecha.push(MultTotalResponsableFecha.toFixed(2));
+                                            }
+
+                                            $('.NombreResponsablePorcentajeFecha').append('<p class="text-center text-primary"><strong>Desde el ' + pickedStartDate + ' hasta el ' + pickedEndDate + ':</strong></p>');
+
+                                            for(let i in ArrayNombreResponsablePF){
+                                                $('.NombreResponsablePorcentajeFecha').append('<p class="text-center"><strong>' + ArrayNombreResponsablePF[i] + ':</strong> ' + TotalResponsablePorcentajeFecha[i] + '%</p><hr>');
+                                            }
+
+                                            $('#' + idBtnPorcentajeFecha).on('hidden.bs.modal', function(){
+                                                $('.NombreResponsablePorcentajeFecha').empty();
+                                            });
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+                );
+            });
+    });
+</script>

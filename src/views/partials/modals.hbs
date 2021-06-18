@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/table_usuarios" method="POST" name="form_usuario">
+                <form action="/tables/usuarios" method="POST" name="form_usuario">
                     <label for="nombre_persona">Nombre completo</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -89,7 +89,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/table_sedes" method="POST" name="form_sede">
+                <form action="/tables/sedes" method="POST" name="form_sede">
                     <label for="nombre_sede">Nombre de la sede</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -119,7 +119,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/table_areas/areas?id_sede={{sedes.id_sede}}" method="POST" name="form_area">
+                <form action="/tables/sedes/areas?id_sede={{sedes.id_sede}}" method="POST" name="form_area">
                     <label for="nombre_area">Nombre del área</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -149,7 +149,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/table_tipos" method="POST" name="form_tipo">
+                <form action="/tables/tipos_hallazgo" method="POST" name="form_tipo">
                     <label for="nombre_tipo">Nombre del tipo de hallazgo</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -180,7 +180,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" name="form_prioridad">
+                <form action="/tables/prioridades" method="POST" name="form_prioridad">
                     <label for="nombre_tipo">Nombre de la prioridad</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -210,7 +210,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" name="form_fuente">
+                <form action="/tables/fuentes" method="POST" name="form_fuente">
                     <label for="nombre_tipo">Nombre de la fuente</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -240,7 +240,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" name="form_factor">
+                <form action="/tables/factores" method="POST" name="form_factor">
                     <label for="nombre_factor">Nombre del factor de riesgo</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -270,7 +270,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" name="form_estado">
+                <form action="/tables/estados" method="POST" name="form_estado">
                     <label for="nombre_estado">Nombre del estado</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">
@@ -308,7 +308,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/table_responsables" method="POST" name="form_responsable">
+                <form action="/tables/responsables" method="POST" name="form_responsable">
                     <label for="nombre_factor">Nombre del responsable</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent borderless_hallazgos">

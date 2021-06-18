@@ -7,7 +7,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const { getAreas } = require('./routes/dynamic_queries');
+const { getAreas, getDataPrioridad, getDataEstado, getDataFactor, getDataArea, getDataMes, TablaIndicadoresFactores, TablaIndicadoresTipos, TablaIndicadoresSedes, TablaIndicadoresPrioridades, TablaIndicadoresEstados, TablaIndicadoresAreas, NombreIndicadorAreas, AllIndicadorAreas, NombresAllIndicadorAreas, TablaIndicadorMes, DateRangePickerTI, methodResponsablesMeses, methodResponsablesPorcentajes} = require('./routes/dynamic_queries');
 const { database } = require('./keys');
 
 // Inicializaciones
@@ -55,6 +55,24 @@ app.use(require('./routes'));
 app.use('/', require('./routes/links'));
 app.use('/', require('./routes/authentication'));
 app.use('/form_hallazgos/sede', getAreas);
+app.use('/TablaIndicadores/FactoresDeRiesgo', TablaIndicadoresFactores);
+app.use('/TablaIndicadores/TiposDeHallazgo', TablaIndicadoresTipos);
+app.use('/TablaIndicadores/Sedes', TablaIndicadoresSedes);
+app.use('/TablaIndicadores/Prioridades', TablaIndicadoresPrioridades);
+app.use('/TablaIndicadores/Estados', TablaIndicadoresEstados);
+app.use('/TablaIndicadores/Areas', TablaIndicadoresAreas);
+app.use('/TablaIndicadores/SingleNombreSede', NombreIndicadorAreas);
+app.use('/TablaIndicadores/AllAreas', AllIndicadorAreas);
+app.use('/TablaIndicadores/NombresSedesIA', NombresAllIndicadorAreas);
+app.use('/TablaIndicadores/Dates', TablaIndicadorMes);
+app.use('/MatrizCharts/ChartPrioridadesHallazgos', getDataPrioridad);
+app.use('/MatrizCharts/ChartEstadosHallazgos', getDataEstado);
+app.use('/MatrizCharts/ChartFactoresHallazgos', getDataFactor);
+app.use('/MatrizCharts/ChartAreasHallazgos', getDataArea);
+app.use('/MatrizCharts/ChartMesesHallazgos', getDataMes);
+app.use('/TablaIndicadores/DateRangeTI', DateRangePickerTI);
+app.use('/TablaIndicadores/ResponsablesMesesTI', methodResponsablesMeses);
+app.use('/TablaIndicadores/ResponsablesPorcentajesTI', methodResponsablesPorcentajes);
 
 // Public
 app.use(express.static(('img_hallazgos')));

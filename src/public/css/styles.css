@@ -66,9 +66,7 @@ a .menu_open:hover {
     box-shadow: -2px -2px 10px rgba(0, 0, 0, 0.322);
     font-size: 17.7px;
 }
-.sidenav a:hover > .sidenav a i {
-    color: red;
-}
+
 .sidenav a i{
     margin-right: 0.4em;
 }
@@ -189,6 +187,20 @@ td .btn_tables_eliminar:hover {
     transition: 0.2s;
 }
 
+.btn_indicador{
+    border: 2px solid rgba(0, 0, 0, 0.281);
+}
+
+.btnIndicadorAreas{
+    background-color: rgba(0, 0, 0, 0.096);
+    border: 2px solid rgba(59, 59, 59, 0.329);
+    color: #000;
+}
+
+#SelectChartAreas:hover, #SelectIndicadorAreas:hover{
+    border-bottom: 1px solid rgb(2, 117, 216);
+}
+
 label,
 div .form-check,
 div .btns {
@@ -206,6 +218,15 @@ div .btns {
     border-top: 0px;
     border-right: 0px;
     border-left: 0px;
+}
+
+.borderless_alert{
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 0;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.356);
 }
 
 .input-group textarea{
@@ -267,6 +288,11 @@ div .check_responsable{
     box-shadow: -2px -2px 25px rgba(0, 0, 0, 0.164);
 }
 
+.container_indicadores{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.247);
+    border: 2px solid rgba(0, 0, 0, 0.096);
+}
+
 .input-group input:focus {
     border-bottom: 2px solid rgb(62, 109, 196);
     outline: 0px !important;
@@ -316,4 +342,36 @@ form .error{
 .a_dates:hover{
     color: #000;
     text-decoration: none;
+}
+
+.dropdown-divider{
+    background-color: blue;
+}
+
+.IconChartPrioridades{
+    border-bottom: 2px solid rgba(143, 143, 143, 0.418);
+}
+
+#ChartType{
+    border-bottom: 2px solid rgba(143, 143, 143, 0.418);
+}
+
+#ChartType:hover{
+    border-bottom: 2px solid rgb(62, 109, 196);
+}
+
+.ChartStyles{
+    background-color: rgba(0, 0, 0, 0.151); 
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.384);
+}
+
+.classCollapseDateRangePicker{
+    background-color: rgba(255, 255, 255, 0.062);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.432);
+}
+.inputDateRangeTI{
+    background-color: rgba(0, 0, 0, 0.000);
+}
+.inputDateRangeTI:focus{
+    background-color: rgba(0, 0, 0, 0.000);
 }

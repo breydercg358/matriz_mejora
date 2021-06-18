@@ -1,0 +1,375 @@
+<script>
+    $(document).ready(function(){
+
+        var Meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        var ArrayNumMeses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+        $('#BtnIndicadorFactor').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/FactoresDeRiesgo',
+                success: function(data){
+                    var TableIndicadorFactores = $('#TableIndicadorFactor tbody');
+                    var TextTotalFactores = $('#TextNumTotalFactores');
+                    var NombreHallazgosFactores = [];
+                    var NumHallazgosFactores = [];
+                    for(var i in data){
+                        NombreHallazgosFactores.push(data[i][1].IndicadoresFactores);
+                        NumHallazgosFactores.push(data[i][0].IndicadoresFactores);
+                    }
+                    for(var i in NumHallazgosFactores && NombreHallazgosFactores){
+                        TableIndicadorFactores.append("<tr><td>" + NombreHallazgosFactores[i] + "</td><td class='classDataNumFactores' id=idDataNumFactores" + [i] + "><strong>" + NumHallazgosFactores[i] + "</strong></td></tr>");
+                    }
+
+                    TextTotalFactores.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">FACTORES DE RIESGO</span>: <strong>' + NumHallazgosFactores.length + '</strong></p>');
+
+                    $('#collapsePlanFR').on('hidden.bs.collapse', function(){
+                        TableIndicadorFactores.empty();
+                        TextTotalFactores.empty();
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorTipo').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/TiposDeHallazgo',
+                success: function(data){
+                    var TableIndicadorTipos = $('#TableIndicadorTipo tbody');
+                    var TextTotalTipos = $('#TextNumTotalTipos');
+                    var NombreHallazgosTipos = [];
+                    var NumHallazgosTipos = [];
+                    for(var i in data){
+                        NombreHallazgosTipos.push(data[i][1].IndicadoresTiposHallazgo);
+                        NumHallazgosTipos.push(data[i][0].IndicadoresTiposHallazgo);
+                    }
+                    for(var i in NumHallazgosTipos && NombreHallazgosTipos){
+                        TableIndicadorTipos.append('<tr><td>' + NombreHallazgosTipos[i] + '</td><td class="classDataNumTipos" id=idDataNumTipos' + [i] + '><strong>' + NumHallazgosTipos[i] + '</strong></td></tr>');
+                    }
+
+                    TextTotalTipos.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">TIPOS DE HALLAZGO</span>: <strong>' + NumHallazgosTipos.length + '</strong></p>');
+
+                    $('#collapsePlanTipo').on('hidden.bs.collapse', function(){
+                        TableIndicadorTipos.empty();
+                        TextTotalTipos.empty();
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorSede').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/Sedes',
+                success: function(data){
+                    var TableIndicadorSedes = $('#TableIndicadorSede tbody');
+                    var TextTotalSedes = $('#TextNumTotalSedes');
+                    var NombreHallazgosSedes = [];
+                    var NumHallazgosSedes = [];
+                    for(var i in data){
+                        NombreHallazgosSedes.push(data[i][1].IndicadoresSedes);
+                        NumHallazgosSedes.push(data[i][0].IndicadoresSedes);
+                    }
+                    for(var i in NumHallazgosSedes && NombreHallazgosSedes){
+                        TableIndicadorSedes.append('<tr><td>' + NombreHallazgosSedes[i] + '</td><td class="classDataNumSedes" id=idDataNumSedes' + [i] + '><strong>' + NumHallazgosSedes[i] + '</strong></td></tr>');
+                    }
+
+                    TextTotalSedes.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">SEDES</span>: <strong>' + NumHallazgosSedes.length + '</strong></p>');
+
+                    $('#collapsePlanSede').on('hidden.bs.collapse', function(){
+                        TableIndicadorSedes.empty();
+                        TextTotalSedes.empty();
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorPrioridad').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/Prioridades',
+                success: function(data){
+                    var TableIndicadorPrioridades = $('#TableIndicadorPrioridad tbody');
+                    var TextTotalPrioridades = $('#TextNumTotalPrioridades');
+                    var NombreHallazgosPrioridad = [];
+                    var NumHallazgosPrioridad = [];
+                    for(var i in data){
+                        NombreHallazgosPrioridad.push(data[i][1].IndicadoresPrioridades);
+                        NumHallazgosPrioridad.push(data[i][0].IndicadoresPrioridades);
+                    }
+                    for(var i in NumHallazgosPrioridad && NombreHallazgosPrioridad){
+                        TableIndicadorPrioridades.append('<tr><td>' + NombreHallazgosPrioridad[i] + '</td><td class="classDataNumPrioridades" id=idDataNumPrioridades' + [i] + '><strong>' + NumHallazgosPrioridad[i] + '</strong></td></tr>');
+                    }
+
+                    TextTotalPrioridades.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">PRIORIDADES</span>: <strong>' + NumHallazgosPrioridad.length + '</strong></p>');
+
+                    $('#collapsePlanPrioridad').on('hidden.bs.collapse', function(){
+                        TableIndicadorPrioridades.empty();
+                        TextTotalPrioridades.empty();
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorEstado').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/Estados',
+                success: function(data){
+                    var TableIndicadorEstados = $('#TableIndicadorEstado tbody');
+                    var TextTotalEstados = $('#TextNumTotalEstados');
+                    var NombresHallazgosEstados = [];
+                    var NumHallazgosEstados = [];
+                    for(var i in data){
+                        NombresHallazgosEstados.push(data[i][1].IndicadorEstados);
+                        NumHallazgosEstados.push(data[i][0].IndicadorEstados);
+                    }
+                    for(var i in NumHallazgosEstados && NombresHallazgosEstados){
+                        TableIndicadorEstados.append('<tr><td style="background-color: {{color_estado}}">' + NombresHallazgosEstados[i] + '</td><td class="classDataNumEstados" id=idDataNumEstados' + [i] + '><strong>' + NumHallazgosEstados[i] + '</strong></td></tr>');
+                    }
+
+                    TextTotalEstados.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">ESTADOS</span>: <strong>' + NumHallazgosEstados.length + '</strong></p>');
+
+                    $('#collapsePlanEstado').on('hidden.bs.collapse', function(){
+                        TableIndicadorEstados.empty();
+                        TextTotalEstados.empty();
+                    });
+                }
+            });
+        });
+
+        $('#SelectIndicadorAreas').change(function(){
+            var SelectedIndicadorSede = $(this).val();
+
+            if(SelectedIndicadorSede == 'MostrarTodas'){
+                $.ajax({
+                    type: "GET",
+                    url: '/TablaIndicadores/AllAreas',
+                    success: function(data){
+                        var TableIndicadorAllAreasHead = $('.TextSede');
+                        var TableIndicadorAllAreasBody = $('#TableIndicadorArea tbody');
+                        var TextTotalAreas = $('#TextNumTotalAreas');
+                        var TextHallazgosSedeArea = $('#NumHallazgosSedeArea');
+                        var NombreAllAreas = [];
+                        var NumHallazgosAllAreas = [];
+
+                        for(var i in data){
+                            NombreAllAreas.push(data[i][1].IndicadorAllAreas);
+                            NumHallazgosAllAreas.push(data[i][0].IndicadorAllAreas);
+                        }
+
+                        $.ajax({
+                            type: "GET",
+                            url: '/TablaIndicadores/NombresSedesIA',
+                            success: function(data){
+                                var NombresSedesAreas = [];
+                                TableIndicadorAllAreasHead.append('Sede');
+
+                                for(var i in data){
+                                    NombresSedesAreas.push(data[i][0].nombre_sede);
+                                }
+
+                                for(var i in NombreAllAreas && NumHallazgosAllAreas && NombresSedesAreas){
+                                    TableIndicadorAllAreasBody.append('<tr><td>' + NombreAllAreas[i] + '</td><td class="classDataNumAreas" id=idDataNumAreas' + [i] + '><strong>' +  NumHallazgosAllAreas[i] + '</strong></td><td>' + NombresSedesAreas[i] + '</td></tr>');
+                                }
+                                    TextTotalAreas.empty();
+                                    TextHallazgosSedeArea.empty();
+                            }
+                        });
+                    }
+                });
+            }
+
+            $.ajax({
+                type: "GET",
+                data: { id_sede: SelectedIndicadorSede },
+                url: '/TablaIndicadores/Areas',
+                success: function(data){
+                    var TableIndicadorAreas = $('#TableIndicadorArea tbody');
+                    var TextTotalAreas = $('#TextNumTotalAreas');
+                    var TextHallazgosSedeArea = $('#NumHallazgosSedeArea');
+                    var nombre_area = [];
+                    var NumHallazgosAreas = [];
+
+                    for(var i in data){
+                        nombre_area.push(data[i][1].IndicadorAreas);
+                        NumHallazgosAreas.push(data[i][0].IndicadorAreas);
+                    }
+
+                    $.ajax({
+                        type: "GET",
+                        data: { id_sede: SelectedIndicadorSede },
+                        url: '/TablaIndicadores/SingleNombreSede',
+                        success: function(data){
+                            
+                            for(var i in NumHallazgosAreas && nombre_area){
+                                TableIndicadorAreas.append('<tr><td>' + nombre_area[i] + '</td><td class="classDataNumAreas" id=idDataNumAreas' + [i] + '><strong>' + NumHallazgosAreas[i] + '</strong></td></tr>');
+                            }
+
+                            var IntHallazgosAreas = NumHallazgosAreas.map((i) => Number(i));
+                            var SumValoresArrayAreas = IntHallazgosAreas.reduce((a, b) => a + b, 0);
+
+                            TextTotalAreas.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">ÁREAS</span> EN LA <span class="text-primary">SEDE "' + Object.values(data[0][0]) + '"</span>: <strong>' + NumHallazgosAreas.length + '</strong></p>');
+
+                            TextHallazgosSedeArea.append('<p><i class="fas fa-hashtag fa-fw"></i> ACTUAL DE <span class="text-primary">HALLAZGOS</span> EN LA <span class="text-primary">SEDE "' + Object.values(data[0][0]) + '"</span>: <strong>' + SumValoresArrayAreas + '</strong></p>');
+
+                            $('#SelectIndicadorAreas').change(function(){
+                                TableIndicadorAreas.empty();
+                                TextTotalAreas.empty();
+                                TextHallazgosSedeArea.empty();
+                                $('.TextSede').empty();
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorPorcentaje').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/Estados',
+                success: function(data){
+                    var TablaIndicadorPorcentaje = $('#TableIndicadorPorcentaje tbody');
+                    var nombre_cumplimiento = [];
+                    var porcentaje_cumplimiento = [];
+                    var total_cumplimiento = [];
+
+                    for(var i in data){
+                        nombre_cumplimiento.push(data[i][1].IndicadorEstados);
+                        porcentaje_cumplimiento.push(data[i][0].IndicadorEstados);
+                    }
+
+                    var IntPorcentaje = porcentaje_cumplimiento.map((i) => Number(i));
+                    var SumValoresEstados = IntPorcentaje.reduce((a, b) => a + b, 0);
+                    
+                    for(var i in IntPorcentaje){
+                        const SumTotalEstados = IntPorcentaje[i] / SumValoresEstados;
+                        const MultTotalEstados = SumTotalEstados * 100;
+                        total_cumplimiento.push(MultTotalEstados.toFixed(2));
+                    }
+                    
+                    for(var i in nombre_cumplimiento && total_cumplimiento){
+                        TablaIndicadorPorcentaje.append('<tr><td><button type="button" value="' + nombre_cumplimiento[i] +'" class="btn btn-sm btn-outline-primary classBtnModalResponsablePorcentaje" id=BtnModalPorcentaje' + [i] + ' data-toggle="modal" data-target=#BtnModalPorcentaje' + [i] + ' title="Filtrar por responsables" style="float: left;"><i class="fas fa-plus-circle fa-sm fa-fw"></i></button>' + nombre_cumplimiento[i] + '</td><td class="classDataNumPorcentajes" id=idDataNumPorcentajes' + [i] + '><strong>' + total_cumplimiento[i] + '%</strong></td></tr>');
+                    }
+
+                    $('.classBtnModalResponsablePorcentaje').on('click', function(){
+                        let valueResponsablePorcentajes = $(this).attr('id');
+                        let sliceValueResponsablePorcentajes = valueResponsablePorcentajes.slice(-1);
+                        let NombreCumplimientoPorcentaje = nombre_cumplimiento[sliceValueResponsablePorcentajes];
+
+                        $.ajax({
+                            type: "GET",
+                            data: { NombreDeCumplimiento: NombreCumplimientoPorcentaje },
+                            url: '/TablaIndicadores/ResponsablesPorcentajesTI',
+                            success: function(data){
+                                let ArrayNombreCumplimientoPorcentaje = [];
+                                let ArrayDataCumplimientoPorcentaje = [];
+                                let TotalResponsablePorcentaje = [];
+
+                                for(let i in data){
+                                    ArrayNombreCumplimientoPorcentaje.push(data[i][1].ResponsablesPorcentaje);
+                                    ArrayDataCumplimientoPorcentaje.push(data[i][0].ResponsablesPorcentaje);
+                                }
+
+                                var IntResponsablePorcentaje = ArrayDataCumplimientoPorcentaje.map((i) => Number(i));
+                                var SumValoresResponsable = IntResponsablePorcentaje.reduce((a, b) => a + b, 0);
+                    
+                                for(var i in IntResponsablePorcentaje){
+                                    const SumTotalResponsable = IntResponsablePorcentaje[i] / SumValoresResponsable;
+                                    const MultTotalResponsable = SumTotalResponsable * 100;
+                                    TotalResponsablePorcentaje.push(MultTotalResponsable.toFixed(2));
+                                }
+
+                                $('.NombreResponsablePorcentaje').append('<p class="text-center text-primary"><strong>Porcentaje total por responsable:</strong></p>');
+
+                                for(let i in ArrayNombreCumplimientoPorcentaje){
+                                    $('.NombreResponsablePorcentaje').append('<p class="text-center"><strong>' + ArrayNombreCumplimientoPorcentaje[i] + ':</strong> ' + TotalResponsablePorcentaje[i] + '%</p><hr>');
+                                }
+
+                                $('.NombreCumplimiento').append('<span>' + NombreCumplimientoPorcentaje + '</span>');
+
+                                $('#' + valueResponsablePorcentajes).on('hidden.bs.modal', function(){
+                                    $('.NombreResponsablePorcentaje').empty();
+                                    $('.NombreCumplimiento').empty();
+                                });
+                            }
+                        });
+                        $('.modalResponsablePorcentajes').append('<div class="modal fade" id=' + valueResponsablePorcentajes + ' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content rounded-0"><div class="modal-header bg-dark rounded-0"><div class="modal-title text-white h6" id="exampleModalLabel"><h3>Cumplimiento de <span class="NombreCumplimiento"></span></h3><h6><p>Filtro de porcentaje por responsables</p></h6></div><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"class="text-white">&times;</span></button></div><div class="modal-body"><span class="NombreResponsablePorcentaje"></span><span class="NombreResponsablePorcentajeFecha"></span><div class="d-flex justify-content-end"><button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cerrar</button></div></div></div></div></div>');
+                    });
+
+                    $('#collapsePorcentaje').on('hidden.bs.collapse', function(){
+                        TablaIndicadorPorcentaje.empty();
+                    });
+                }
+            });
+        });
+
+        $('#BtnIndicadorMes').click(function(){
+            $.ajax({
+                type: "GET",
+                url: '/TablaIndicadores/Dates',
+                success: function(data){
+                    var TablaIndicadorMes = $('#TableIndicadorMes tbody');
+                    var NumTotalHallazgosMes = [];
+
+                    for(var i in data){
+                        NumTotalHallazgosMes.push(data[i][0].IndicadorDates);
+                    }
+
+                    for(var i = 0; i < Meses.length; i++){
+                        TablaIndicadorMes.append('<tr><td><button type="button" class="btn btn-sm btn-outline-primary classBtnModalResponsableMeses" id=BtnModalMeses' + [i] + ' data-toggle="modal" data-target=#BtnModalMeses' + [i] + ' title="Filtrar por responsables" style="float: left;"><i class="fas fa-plus-circle fa-sm fa-fw"></i></button>' + Meses[i] + '</td><td class="classDataNumMeses" id=idDataNumMeses' + [i] + '><strong>' + NumTotalHallazgosMes[i] + '</strong></td></tr>');
+                    }
+
+                    $('.classBtnModalResponsableMeses').click(function(){
+                        let valueResponsableMeses = $(this).attr('id');
+                        let sliceValueResponsableMeses = $(this).attr('id').slice(-1);
+                        let NombreMes = Meses[sliceValueResponsableMeses];
+                        let selectValueMeses = ArrayNumMeses[sliceValueResponsableMeses];
+
+                        if(valueResponsableMeses == 'BtnModalMeses10'){
+                            NombreMes = Meses[10];
+                            selectValueMeses = ArrayNumMeses[10];
+                        }else if(valueResponsableMeses == 'BtnModalMeses11'){
+                            NombreMes = Meses[11];
+                            selectValueMeses = ArrayNumMeses[11];
+                        }
+
+                        $.ajax({
+                            type: "GET",
+                            data: { SelectedMonth: selectValueMeses },
+                            url: '/TablaIndicadores/ResponsablesMesesTI',
+                            success: function(data){
+                                dataNombresResponsables = [];
+                                dataResponsablesMeses = [];
+
+                                for(let i in data){
+                                    dataNombresResponsables.push(data[i][1].ResponsablesMeses);
+                                    dataResponsablesMeses.push(data[i][0].ResponsablesMeses);
+                                }
+
+                                for(let i in dataNombresResponsables){
+                                    $('.NombreResponsableMes').append('<p class="text-center"><strong>' + dataNombresResponsables[i] + ':</strong> ' + dataResponsablesMeses[i] + '</p><hr>');
+                                }
+
+                                $('.NombreMes').append('<span>' + NombreMes + '</span>');
+                                
+                                $('#' + valueResponsableMeses).on('hidden.bs.modal', function(){
+                                    $('.NombreMes').empty();
+                                    $('.NombreResponsableMes').empty();
+                                });
+                            }
+                        });
+                        $('.modalResponsableMeses').append('<div class="modal fade" id=' + valueResponsableMeses + ' tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content rounded-0"><div class="modal-header bg-dark rounded-0"><div class="modal-title text-white h6" id="exampleModalLabel"><h3>Mes de <span class="NombreMes"></span></h3><h6><p>Filtro de hallazgos por responsables</p></h6></div><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"class="text-white">&times;</span></button></div><div class="modal-body"><span class="NombreResponsableMes"></span><div class="d-flex justify-content-end"><button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cerrar</button></div></div></div></div></div>');
+                    });
+
+                    $('#collapseMesReporte').on('hidden.bs.collapse', function(){
+                        TablaIndicadorMes.empty();
+                    });
+                }
+            });
+        });
+
+    });
+</script>

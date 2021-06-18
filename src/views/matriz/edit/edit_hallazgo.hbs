@@ -1,0 +1,237 @@
+<div class="d-flex justify-content-end p-2">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Inicio matriz</a></li>
+            {{#if (isAdministrator user.rol "Administrador")}}
+            <li class="breadcrumb-item"><a href="/tables/hallazgos">Tabla hallazgos</a></li>
+            {{/if}}
+            {{#if (isBasicUser user.rol "Estándar")}}
+            <li class="breadcrumb-item"><a href="/tables/hallazgos/{{user.id_usuario}}">Tabla hallazgos</a></li>
+            {{/if}}
+            <li class="breadcrumb-item">Editar hallazgo {{HallazgosEdit.id_hallazgo}}</li>
+        </ol>
+    </nav>
+</div>
+<br>
+
+<div class="text-center">
+    <button type="button" class="btn btn-outline-primary rounded-0 p-2" data-toggle="collapse"
+        data-target="#collapseEditHallazgo" aria-expanded="false" aria-controls="collapseExample">Acerca de editar un
+        hallazgo</button>
+</div>
+
+<div class="collapse" id="collapseEditHallazgo">
+    <div class="alert alert-primary col-md-8 mx-auto" role="alert">
+        <h4 class="alert-heading"><i class="fas fa-info-circle fa-fw"></i>Si desea editar:</h4>
+        <hr>
+        <div class="text-muted">
+            <p><b>- Los registros fotográficos del hallazgo:</b> Puede hacerlo dando clic <a
+                    href="/img_hallazgos/hallazgos?id_hallazgo={{HallazgosEdit.id_hallazgo}}"><b>aquí</b></a>.</p>
+            <p><b>- El estado del hallazgo:</b> Puede hacerlo dando clic en el botón "Cambiar" dentro de la columna
+                "Estado"
+                del respectivo hallazgo.</p>
+        </div>
+    </div>
+</div>
+<hr>
+
+<h3 class="modal-title col-md-8 mx-auto bg-dark text-center text-light" id="LabelHallazgo">Editar hallazgo</h3>
+<div class="card col-md-8 mx-auto">
+    <div class="card-body rounded-0">
+        <form action="/tables/hallazgos/edit/{{HallazgosEdit.id_hallazgo}}" name="form_hallazgos" class="form_hallazgos"
+            method="POST">
+            <div class="input-group">
+                <input type="hidden" class="form-control" name="id_hallazgo" id="id_hallazgo"
+                    value="{{HallazgosEdit.id_hallazgo}}" readonly="readonly">
+            </div>
+            <label for="nombre_hallazgo">Nombre del hallazgo <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-sticky-note"></i>
+                </span>
+                <input class="form-control" type="text" name="nombre_hallazgo" id="nombre_hallazgo"
+                    value="{{HallazgosEdit.nombre_hallazgo}}" placeholder="{{HallazgosEdit.nombre_hallazgo}}">
+            </div>
+            <label for="fecha">Fecha de realización <b class="text-danger">*</b></label>
+            <p><strong>Fecha registrada: </strong><i>{{dateFormat HallazgosEdit.fecha format='dddd[,] D [de] MMMM [de] YYYY'}}</i></p>
+            <div class="input-group">
+                <input class="form-control bg-transparent" name="fecha" id="fecha_edit" type="text" value={{HallazgosEdit.fecha}} placeholder={{HallazgosEdit.fecha}} onfocus="(this.type='date')">
+                <input type="text" placeholder="Date of birth" onfocus="(this.type='date')"> 
+                <span class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                    <i class="fas fa-calendar"></i>
+                </span>
+                <span class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark" title="Quitar fecha"
+                    data-clear>
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <label for="sede">Sede <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-building"></i>
+                </span>
+                <select class="custom-select rounded-0" name="sede" id="sede">
+                    <option selected value="{{HallazgosEdit.sede}}">{{HallazgosEdit.sede}}</option>
+                    {{#each sedes}}
+                    <option value="{{id_sede}}">{{nombre_sede}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="area">Área <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-map-marker-alt"></i>
+                </span>
+                <select class="custom-select rounded-0" name="area" id="area">
+                    <option selected value="{{HallazgosEdit.area}}">{{HallazgosEdit.area}}</option>
+                    {{#each areas}}
+                    <option value="{{nombre_area}}">{{nombre_area}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="lugar_hallazgo">Lugar exacto del hallazgo</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-map-signs"></i>
+                </span>
+                <input class="form-control" type="text" name="lugar_hallazgo" id="lugar_hallazgo" value="{{HallazgosEdit.lugar_hallazgo}}" placeholder="{{HallazgosEdit.lugar_hallazgo}}">
+            </div>
+            <label for="responsable"><i class="fas fa-users p-2"></i>Responsable/s <b class="text-danger">*</b></label>
+            <div class="custom-control custom-checkbox check_responsable" name="responsable_checkbox" id="responsable">
+                {{#each responsables}}
+                <div class="row p-2">
+                    <div class="col">
+                        <input type="checkbox" class="custom-control-input" value="{{nombre_responsable}}"
+                            name="responsable" id="{{id_responsable}}">
+                        <label class="custom-control-label label_responsable" for="{{id_responsable}}">
+                            {{nombre_responsable}}
+                        </label>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <label for="descripcion">Descripción <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-align-left"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="3" name="descripcion" id="descripcion"
+                    placeholder="Escribe aquí la descripción del hallazgo...">{{HallazgosEdit.descripcion}}</textarea>
+            </div>
+            <label for="tipo_hallazgo">Tipo de hallazgo <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-folder"></i>
+                </span>
+                <select class="custom-select rounded-0" name="tipo_hallazgo" id="tipo_hallazgo">
+                    <option selected value="{{HallazgosEdit.tipo_hallazgo}}">{{HallazgosEdit.tipo_hallazgo}}</option>
+                    {{#each tipos}}
+                    <option value="{{nombre_tipo}}">{{nombre_tipo}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="fuente">Fuente <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-briefcase"></i>
+                </span>
+                <select class="custom-select rounded-0" name="fuente" id="fuente">
+                    <option selected value="{{HallazgosEdit.fuente}}">{{HallazgosEdit.fuente}}</option>
+                    {{#each fuentes}}
+                    <option value="{{nombre_fuente}}">{{nombre_fuente}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="factor_riesgo">Factor de riesgo <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                <select class="custom-select rounded-0" name="factor_riesgo" id="factor_riesgo">
+                    <option selected value="{{HallazgosEdit.factor_riesgo}}">{{HallazgosEdit.factor_riesgo}}</option>
+                    {{#each factores}}
+                    <option value="{{nombre_factor}}">{{nombre_factor}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="prioridad">Prioridad <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent borderless_hallazgos">
+                    <i class="fas fa-star"></i>
+                </span>
+                <select class="custom-select rounded-0" name="prioridad" id="prioridad">
+                    <option selected value="{{HallazgosEdit.prioridad}}">{{HallazgosEdit.prioridad}}</option>
+                    {{#each prioridades}}
+                    <option value="{{nombre_prioridad}}">{{nombre_prioridad}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="fecha_ejecucion">Fecha de ejecución <b class="text-danger">*</b></label>
+            <p><strong>Fecha registrada: </strong><i>{{dateFormat HallazgosEdit.fecha_ejecucion format='dddd[,] D [de] MMMM [de] YYYY'}}</i></p>
+            <div class="input-group calendario_edit_ejecucion">
+                <input class="form-control bg-transparent" name="fecha_ejecucion" id="fecha_ejecucion" type="text" data-input>
+                <span class="btn btn-primary input-group-text rounded-0 bg-transparent text-dark"
+                    title="Mostrar calendario" data-toggle="tooltip" data-toggle>
+                    <i class="fas fa-calendar"></i>
+                </span>
+                <span class="btn btn-danger input-group-text rounded-0 bg-transparent text-dark" title="Quitar fecha"
+                    data-clear>
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <label for="plan_sugerido">Plan de acción sugerido <b class="text-danger">*</b></label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-pencil-ruler"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="2" name="plan_sugerido" id="plan_sugerido"
+                    placeholder="Escribe aquí el plan de acción sugerido para el hallazgo...">{{HallazgosEdit.plan_sugerido}}</textarea>
+            </div>
+            <label for="otras_observaciones">Otras observaciones</label>
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border_hallazgos">
+                    <i class="fas fa-marker"></i>
+                </span>
+                <textarea class="form-control rounded-0" rows="3" name="otras_observaciones" id="otras_observaciones"
+                    placeholder="Escribe aquí si posees otras observaciones acerca del hallazgo...">{{HallazgosEdit.otras_observaciones}}</textarea>
+            </div>
+            <br>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success rounded-0" data-toggle="modal"
+                    data-targer="#ModalEditarHallazgo{{@index}}">Editar</button>
+                {{!-- MODAL EDITAR HALLAZGO --}}
+                <div class="modal fade" id="ModalEditarHallazgo{{@index}}" tabindex="-1"
+                    aria-labelledby="EliminarUsuarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-md">
+                        <div class="modal-content rounded-0">
+                            <div class="modal-body rounded-0">
+                                <span class="text-primary d-flex justify-content-center">
+                                    <i class="fas fa-info-circle fa-3x"></i>
+                                </span>
+                                <br>
+                                <h5 class="text-center">¿Desea editar el hallazgo<br>
+                                    '{{HallazgosEdit.id_hallazgo}}'?</h5>
+                                <br>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success rounded-0">Sí
+                                        (editar)</button>
+                                    <button type="button" class="btn btn-outline-danger rounded-0"
+                                        data-dismiss="modal">No (cerrar ventana)</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- FIN MODAL EDITAR HALLAZGO --}}
+                {{#if (isAdministrator user.rol "Administrador")}}
+                <a href="/tables/hallazgos" class="btn btn-outline-danger rounded-0">Cancelar</a>
+                {{/if}}
+                {{#if (isBasicUser user.rol "Estándar")}}
+                <a href="/tables/hallazgos/{{user.id_usuario}}" class="btn btn-outline-danger rounded-0">Cancelar</a>
+                {{/if}}
+            </div>
+        </form>
+    </div>
+</div>
+<br> 
