@@ -1,3 +1,4 @@
+// Llamada de diferentes plugins disponibles para NodeJS
 const express = require('express');
 const morgan = require('morgan');
 const exphbs = require('express-handlebars');
@@ -7,14 +8,18 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+
+// Llamada de distintos métodos de consulta a la BD dentro del archivo 'dynamic_queries.js'
 const { getAreas, getDataPrioridad, getDataEstado, getDataFactor, getDataArea, getDataMes, TablaIndicadoresFactores, TablaIndicadoresTipos, TablaIndicadoresSedes, TablaIndicadoresPrioridades, TablaIndicadoresEstados, TablaIndicadoresAreas, NombreIndicadorAreas, AllIndicadorAreas, NombresAllIndicadorAreas, TablaIndicadorMes, DateRangePickerTI, methodResponsablesMeses, methodResponsablesPorcentajes} = require('./routes/dynamic_queries');
+
+// Llamada del módulo 'database' dentro del archivo 'keys.js'
 const { database } = require('./keys');
 
-// Inicializaciones
+// Inicializaciones:
 const app = express();
 require('./lib/passport');
 
-// Settings
+// Configuración:
 app.set('port', process.env.PORT || 4201);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
@@ -26,7 +31,7 @@ app.engine('.hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 
-// Middleware
+// Middleware:
 app.use(session({
     secret: 'matrizsession',
     resave: false,
@@ -42,7 +47,7 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Global variables
+// Variables globales:
 app.use((req, res, next) => {
     app.locals.user_success = req.flash('user_success');
     app.locals.message = req.flash('message');
@@ -50,7 +55,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
+// Rutas:
 app.use(require('./routes'));
 app.use('/', require('./routes/links'));
 app.use('/', require('./routes/authentication'));
@@ -74,11 +79,11 @@ app.use('/TablaIndicadores/DateRangeTI', DateRangePickerTI);
 app.use('/TablaIndicadores/ResponsablesMesesTI', methodResponsablesMeses);
 app.use('/TablaIndicadores/ResponsablesPorcentajesTI', methodResponsablesPorcentajes);
 
-// Public
+// carpeta Public:
 app.use(express.static(('img_hallazgos')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Starting
+// Iniciación del puerto 4201 para la aplicación:
 app.listen(app.get('port'), () => {
     console.log('Server on port', app.get('port'));
 });

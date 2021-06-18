@@ -1,15 +1,19 @@
-const { normalizeUnits } = require('moment');
+// Llamada del módulo 'pool' para realizar consultas a la BD
 const pool = require('../database');
 
 module.exports = {
-    // Código para enviar datos de las áreas una vez seleccionada la sede en el formulario de hallazgos:
+    // Código para enviar el nombre de las áreas una vez una sede ha sido seleccionada en el formulario de hallazgos:
     getAreas: async (req, res) => {
+        // Consulta para seleccionar el identificador de la sede seleccionada
         const selectedSede = req.query.id_sede;
+        // Consulta para obtener todas las áreas que posean el identificador en cuestión
         const query_areas = "SELECT * FROM tbl_areas WHERE id_sede = ?";
+        // Ejecución de la consulta
         await pool.query(query_areas, [selectedSede], (err, ResultadoAreas) => {
             if(err){
                 return res.status(500).send(err);
             }
+            // Envío con la función 'send' de los datos obtenidos de la consulta
             res.send(ResultadoAreas);
         });
     },
